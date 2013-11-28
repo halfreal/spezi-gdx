@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="de.halfreal.makeS" default="makeS" basedir=".">
+  <target name ="makeS" description="Create S enum from a properties file">
+  <mkdir dir="src/main/gen/de/halfreal/eafos/client/gen/" />
+  <java classpath="bin:libs/eafos-helper.jar:libs/gdx.jar:target" classname="de.halfreal.spezi.gdx.system.BuildS" failonerror="true"  >
+   		<arg  value="${basedir}" />
+   </java>
+   <java classpath="bin:libs/eafos-helper.jar:libs/gdx.jar:target" classname="de.halfreal.spezi.gdx.system.BuildST" failonerror="true"  >
+   		<arg  value="${basedir}" />
+   </java>
+  </target>
+</project>

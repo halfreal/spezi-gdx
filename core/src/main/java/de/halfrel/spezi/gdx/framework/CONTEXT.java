@@ -1,0 +1,30 @@
+package de.halfrel.spezi.gdx.framework;
+
+public enum CONTEXT {
+	buyShopItem,
+	cancelProduction,
+	collectMessageReward,
+	createUser,
+	deleteMessages,
+	endFight,
+	fetchGame,
+	fetchSectors,
+	login,
+	readMessages,
+	requestExtras,
+	selectGame,
+	selectSector,
+	speedUpBlueprintResearch,
+	speedUpCyborgProduction,
+	speedUpProductionSlotUpgrade,
+	speedUpWeaponLabUpgrade,
+	speedUpWeaponResearch,
+	startBlueprintResearch,
+	startFight,
+	startProduction,
+	startWeaponResearch,
+	updateUserAndPlayer,
+	upgradePlayer,
+	upgradeProductionSlot,
+	upgradeWeaponLab
+}

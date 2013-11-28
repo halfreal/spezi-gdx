@@ -1,4 +1,12 @@
+.settings
+.project
+.classpath
+bin
+target
+gen
+
 *.class
+
 
 # Package Files #
 *.jar
