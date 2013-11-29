@@ -12,7 +12,7 @@
 
         <groupId>de.halfreal</groupId>
         <artifactId>spezi-gdx-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <packaging>pom</packaging>
 
         <name>Spezi GDX :: Parent</name>
@@ -95,7 +95,7 @@
                         </plugin>
                         <plugin>
                                 <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-source-plugin</artifactId>
+                                        <artifactId>maven-source-plugin</artifactId>
                                 <executions>
                                         <execution>
                                                 <id>attach-sources</id>
