@@ -1,6 +1,5 @@
 package de.halfrel.spezi.gdx.framework;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,13 +19,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import de.halfreal.spezi.gdx.model.Pair;
 import de.halfreal.spezi.gdx.system.Assets;
+import de.halfreal.spezi.mvc.AbstractController;
+import de.halfreal.spezi.mvc.AbstractModel;
+import de.halfreal.spezi.mvc.Key;
+import de.halfreal.spezi.mvc.ListenerRegistry;
 
 /**
  * The base class for all game screens.
  */
-public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends DialogModel>
+public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
 		implements ExtendedScreen {
 
 	public static abstract class OnLoadedListener {
@@ -233,13 +235,14 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 	protected C controller;
 	protected final SpeziGame framework;
 	private boolean initModelListeners;
-	private List<Pair<String, PropertyChangeListener>> listeners;
+	private ListenerRegistry<MODEL> listenerRegistry;
 	private MODEL model;
 	private Actor oldActor;
 	private boolean resumed;
 	private List<ScreenWidget<?, ?>> screenWidgets;
 	private boolean show;
 	protected final Stage stage;
+
 	private ScreenStyle style;
 
 	public AbstractScreen(SpeziGame framework, C controller) {
@@ -269,7 +272,7 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 			}
 
 		};
-		listeners = new ArrayList<Pair<String, PropertyChangeListener>>();
+		listenerRegistry = new ListenerRegistry<MODEL>(model);
 		OrthographicCamera orthoCamara = new OrthographicCamera();
 		orthoCamara.setToOrtho(false, WIDTH, HEIGHT);
 		stage.setCamera(orthoCamara);
@@ -401,10 +404,9 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 		return assetsLoaded;
 	}
 
-	protected void listen(String key, PropertyChangeListener listener) {
-		AbstractController.mayRegister(key, listener, model.getChanges());
-		listeners.add(new Pair<String, PropertyChangeListener>(key, listener));
-		model.getChanges().addPropertyChangeListener(key, listener);
+	protected <T> void listen(Key<T> key,
+			de.halfreal.spezi.mvc.ChangeListener<T> listener) {
+		listenerRegistry.registerListener(key, listener);
 	}
 
 	protected Class<?> neededSkin() {
@@ -480,9 +482,15 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 
 	private synchronized void performShowComplete() {
 		if (assetsLoaded && !afterShow && show) {
-			for (ScreenWidget<?, ?> screenWidget : screenWidgets) {
+			for (ScreenWidget<? extends AbstractController<?>, ?> screenWidget : screenWidgets) {
 				if (screenWidget.getController() != null) {
-					screenWidget.getController().performUpdate();
+					AbstractController<?> screenController = screenWidget
+							.getController();
+					if (screenController instanceof AbstractSpeziController) {
+						((AbstractSpeziController<?>) screenController)
+								.performUpdate();
+					}
+
 				}
 				screenWidget.performShow(stage);
 			}
@@ -497,20 +505,10 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 	}
 
 	private void removeModelListeners() {
-		if (getController() != null) {
-			getController().removeModelListeners();
-		}
-
-		for (Pair<String, PropertyChangeListener> entry : listeners) {
-			model.getChanges().removePropertyChangeListener(entry.getFirst(),
-					entry.getSecond());
-		}
+		listenerRegistry.onPause();
 
 		for (ScreenWidget screenWidget : screenWidgets) {
 			screenWidget.removeModelListeners();
-			if (screenWidget.getController() != null) {
-				screenWidget.getController().removeModelListeners();
-			}
 		}
 
 		initModelListeners = false;
@@ -579,9 +577,6 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 		Gdx.app.log(getName(), "SHOW, init listeners");
 		Assets.resume();
 		show = true;
-		if (getController() != null) {
-			getController().performInitModelListeners();
-		}
 		performInitModelListeners();
 		checkDimensions();
 		performShowComplete();
@@ -611,9 +606,4 @@ public class AbstractScreen<C extends DialogController<MODEL>, MODEL extends Dia
 		batch.setProjectionMatrix(camara.combined);
 	}
 
-	public void waiting(boolean wait) {
-
-		model.setWaiting(wait);
-
-	}
 }

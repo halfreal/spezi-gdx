@@ -1,8 +1,6 @@
 package de.halfrel.spezi.gdx.framework;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,51 +21,37 @@ import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
-import de.halfreal.spezi.gdx.model.Pair;
+import de.halfreal.spezi.mvc.AbstractController;
+import de.halfreal.spezi.mvc.AbstractModel;
 
-public class AbstractController<M extends Model> implements Controller<M> {
+/**
+ * FIXME extract Prefernc managment to PrefernceKeys and a generic way to
+ * approach prefrence storing in the spezi-mvc framework
+ * 
+ */
+public class AbstractSpeziController<M extends AbstractModel> extends
+		AbstractController<M> {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractController.class);
-
-	public static void mayRegister(String key, PropertyChangeListener listener,
-			PropertyChangeSupport changes) {
-		// TODO Auto-generated method stub
-
-		if (changes.hasListeners(key)) {
-			PropertyChangeListener[] propertyChangeListeners = changes
-					.getPropertyChangeListeners(key);
-			for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {
-				if (propertyChangeListener == listener) {
-					throw new RuntimeException(
-							"Can not register the same listener twice for the same key: "
-									+ key);
-				}
-			}
-
-		}
-
-	}
+			.getLogger(AbstractSpeziController.class);
 
 	private Preferences defaultPreferences;
 	protected SpeziGame framework;
 	private Boolean initListeners = false;
-	private List<Pair<String, PropertyChangeListener>> listeners;
 	protected M model;
 	private ObjectMapper objectMappper;
 	protected AbstractScreenModel screenModel;
 	private Boolean updated = false;
 
-	public AbstractController(M model, SpeziGame framework) {
+	public AbstractSpeziController(M model, SpeziGame framework) {
+		super(model);
 		this.model = model;
 		this.framework = framework;
-		listeners = new ArrayList<Pair<String, PropertyChangeListener>>();
 		objectMappper = ObjectMapperFactory.create();
 	}
 
 	protected void addPropertyChangeListener(String key,
 			PropertyChangeListener listener) {
-		model.getChanges().addPropertyChangeListener(key, listener);
 	}
 
 	public Preferences defaultPreferences() {
@@ -104,12 +88,6 @@ public class AbstractController<M extends Model> implements Controller<M> {
 	}
 
 	public void initModelListeners() {
-	}
-
-	protected void listen(String key, PropertyChangeListener listener) {
-		mayRegister(key, listener, model.getChanges());
-		listeners.add(new Pair<String, PropertyChangeListener>(key, listener));
-		this.addPropertyChangeListener(key, listener);
 	}
 
 	public boolean loadBoolean(String key, boolean defaultValue) {
@@ -163,18 +141,6 @@ public class AbstractController<M extends Model> implements Controller<M> {
 
 		if (object instanceof String) {
 
-			// if (clazz.equals(Map.class)) {
-			// clazz = HashMap.class;
-			// }
-			//
-			// if (clazz.equals(List.class)) {
-			// clazz = ArrayList.class;
-			// }
-			//
-			// if (clazz.equals(Set.class)) {
-			// clazz = HashSet.class;
-			// }
-
 			JavaType constructType = objectMappper.constructType(type);
 			try {
 				return objectMappper.readValue((String) object, constructType);
@@ -199,15 +165,6 @@ public class AbstractController<M extends Model> implements Controller<M> {
 		return value != null && value.length() > 0 ? value : defaultValue;
 	}
 
-	@Override
-	public synchronized void performInitModelListeners() {
-		if (!initListeners) {
-			initListeners = true;
-			initModelListeners();
-		}
-	}
-
-	@Override
 	public synchronized void performUpdate() {
 		if (!updated) {
 			updated = true;
@@ -222,26 +179,6 @@ public class AbstractController<M extends Model> implements Controller<M> {
 	public void remove(String key) {
 		defaultPreferences().remove(key);
 		defaultPreferences().flush();
-	}
-
-	@Override
-	public synchronized void removeModelListeners() {
-		for (Pair<String, PropertyChangeListener> entry : listeners) {
-			this.removePropertyChangeListener(entry.getFirst(),
-					entry.getSecond());
-		}
-
-		listeners.clear();
-		initListeners = false;
-	}
-
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		model.getChanges().removePropertyChangeListener(listener);
-	}
-
-	public void removePropertyChangeListener(String key,
-			PropertyChangeListener listener) {
-		model.getChanges().removePropertyChangeListener(key, listener);
 	}
 
 	/**
@@ -331,15 +268,17 @@ public class AbstractController<M extends Model> implements Controller<M> {
 		this.screenModel = screenModel;
 	}
 
+	// TODO move to SpeziScreen
 	protected void storeOnChange(final String key) {
-		listen(key, new GdxPropertyChangeListener() {
 
-			@Override
-			public void changed(PropertyChangeEvent evt) {
-				storeProperty(key, evt.getNewValue());
-			}
-
-		});
+		// listen(key, new GdxPropertyChangeListener() {
+		//
+		// @Override
+		// public void changed(PropertyChangeEvent evt) {
+		// storeProperty(key, evt.getNewValue());
+		// }
+		//
+		// });
 	}
 
 	protected void storeProperty(String key, Collection<?> list) {
@@ -422,7 +361,6 @@ public class AbstractController<M extends Model> implements Controller<M> {
 		return sb.toString();
 	}
 
-	@Override
 	public void update() {
 	}
 

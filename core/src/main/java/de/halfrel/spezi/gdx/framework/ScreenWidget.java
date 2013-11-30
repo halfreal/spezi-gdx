@@ -1,9 +1,5 @@
 package de.halfrel.spezi.gdx.framework;
 
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,43 +8,42 @@ import com.badlogic.gdx.utils.Disposable;
 
 import de.halfreal.spezi.gdx.math.Timer;
 import de.halfreal.spezi.gdx.math.Timer.Task;
-import de.halfreal.spezi.gdx.model.Pair;
 import de.halfreal.spezi.gdx.system.Assets;
+import de.halfreal.spezi.mvc.AbstractController;
+import de.halfreal.spezi.mvc.AbstractModel;
+import de.halfreal.spezi.mvc.ChangeListener;
+import de.halfreal.spezi.mvc.Key;
+import de.halfreal.spezi.mvc.ListenerRegistry;
 
-public class ScreenWidget<C extends Controller<MODEL>, MODEL extends Model>
+/**
+ * TODO introduce a listenerFactory
+ * 
+ * 
+ */
+public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
 		extends WidgetGroup implements Disposable {
 
 	protected C controller;
 	private boolean create;
 
 	private boolean initListeners;
-
-	private List<Pair<String, PropertyChangeListener>> listeners;
+	private ListenerRegistry<MODEL> listenerRegistry;
 
 	protected MODEL model;
 
-	private List<Pair<String, PropertyChangeListener>> parentListeners;
 	private float prefHeight;
 	private float prefWidth;
 	protected AbstractScreen<?, ?> screen;
 	private Skin skin;
 
-	@SuppressWarnings("unchecked")
-	public <CC extends Controller<MM>, MM extends MODEL> ScreenWidget(
-			CC controller, AbstractScreen<?, ?> screen) {
+	public ScreenWidget(C controller, AbstractScreen<?, ?> screen) {
 		if (controller != null) {
 			this.model = controller.getModel();
-			if (controller instanceof AbstractController<?>) {
-				((AbstractController<?>) controller)
-						.setScreenModel((AbstractScreenModel) screen.getModel());
-			}
-
 		}
 
-		this.controller = (C) controller;
+		this.controller = controller;
 		this.screen = screen;
-		this.listeners = new ArrayList<Pair<String, PropertyChangeListener>>();
-		this.parentListeners = new ArrayList<Pair<String, PropertyChangeListener>>();
+		listenerRegistry = new ListenerRegistry<MODEL>(model);
 		create = false;
 		initListeners = false;
 	}
@@ -87,20 +82,11 @@ public class ScreenWidget<C extends Controller<MODEL>, MODEL extends Model>
 	}
 
 	public void initModelListeners() {
+
 	}
 
-	protected void listen(String key, PropertyChangeListener listener) {
-		AbstractController.mayRegister(key, listener, model.getChanges());
-		listeners.add(new Pair<String, PropertyChangeListener>(key, listener));
-		model.getChanges().addPropertyChangeListener(key, listener);
-	}
-
-	protected void listenParent(String key, PropertyChangeListener listener) {
-		AbstractController.mayRegister(key, listener, screen.getModel()
-				.getChanges());
-		parentListeners.add(new Pair<String, PropertyChangeListener>(key,
-				listener));
-		screen.getModel().getChanges().addPropertyChangeListener(key, listener);
+	protected <T> void listen(Key<T> key, ChangeListener<T> listener) {
+		listenerRegistry.registerListener(key, listener);
 	}
 
 	public Class<?> neededSkin() {
@@ -150,9 +136,6 @@ public class ScreenWidget<C extends Controller<MODEL>, MODEL extends Model>
 
 	public void performHide() {
 		removeModelListeners();
-		if (getController() != null) {
-			getController().removeModelListeners();
-		}
 		initListeners = false;
 		onHide();
 	}
@@ -160,10 +143,8 @@ public class ScreenWidget<C extends Controller<MODEL>, MODEL extends Model>
 	public void performInitListeners() {
 		if (!initListeners) {
 			initModelListeners();
+			listenerRegistry.onResume();
 			initListeners = true;
-		}
-		if (getController() != null) {
-			getController().performInitModelListeners();
 		}
 	}
 
@@ -196,21 +177,7 @@ public class ScreenWidget<C extends Controller<MODEL>, MODEL extends Model>
 	}
 
 	public void removeModelListeners() {
-		for (Pair<String, PropertyChangeListener> entry : listeners) {
-			model.getChanges().removePropertyChangeListener(entry.getFirst(),
-					entry.getSecond());
-		}
-		listeners.clear();
-	}
-
-	public void removeParentModelListeners() {
-		for (Pair<String, PropertyChangeListener> entry : parentListeners) {
-			screen.getModel()
-					.getChanges()
-					.removePropertyChangeListener(entry.getFirst(),
-							entry.getSecond());
-		}
-		parentListeners.clear();
+		listenerRegistry.onPause();
 	}
 
 	public void setPrefHeight(float prefHeight) {

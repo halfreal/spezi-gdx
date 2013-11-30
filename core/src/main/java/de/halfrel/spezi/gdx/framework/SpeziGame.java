@@ -48,15 +48,6 @@ public abstract class SpeziGame extends Game implements ClientErrorHandler {
 		if (getScreen() != null) {
 			final AbstractScreen<?, ?> oldScreen = getScreen();
 
-			DialogModel model = oldScreen.getModel();
-			DialogModel modelNew = screen.getModel();
-			while (model.peakServiceError() != null) {
-				modelNew.addServiceError(model.pollServiceError());
-			}
-			while (model.peakClientError() != null) {
-				modelNew.addClientError(model.pollClientError());
-			}
-
 			oldScreen.onPauseScreen(new TransitionListener() {
 
 				@Override
