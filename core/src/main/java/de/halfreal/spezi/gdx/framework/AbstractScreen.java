@@ -486,8 +486,8 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 				if (screenWidget.getController() != null) {
 					AbstractController<?> screenController = screenWidget
 							.getController();
-					if (screenController instanceof AbstractSpeziController) {
-						((AbstractSpeziController<?>) screenController)
+					if (screenController instanceof ExtendedController) {
+						((ExtendedController<?>) screenController)
 								.performUpdate();
 					}
 

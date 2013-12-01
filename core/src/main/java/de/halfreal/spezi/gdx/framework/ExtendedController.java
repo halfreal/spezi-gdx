@@ -1,6 +1,5 @@
 package de.halfreal.spezi.gdx.framework;
 
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,29 +28,24 @@ import de.halfreal.spezi.mvc.AbstractModel;
  * approach prefrence storing in the spezi-mvc framework
  * 
  */
-public class AbstractSpeziController<M extends AbstractModel> extends
+public class ExtendedController<M extends AbstractModel> extends
 		AbstractController<M> {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractSpeziController.class);
+			.getLogger(ExtendedController.class);
 
 	private Preferences defaultPreferences;
 	protected SpeziGame framework;
-	private Boolean initListeners = false;
 	protected M model;
 	private ObjectMapper objectMappper;
-	protected AbstractScreenModel screenModel;
+	protected AbstractModel screenModel;
 	private Boolean updated = false;
 
-	public AbstractSpeziController(M model, SpeziGame framework) {
+	public ExtendedController(M model, SpeziGame framework) {
 		super(model);
 		this.model = model;
 		this.framework = framework;
 		objectMappper = ObjectMapperFactory.create();
-	}
-
-	protected void addPropertyChangeListener(String key,
-			PropertyChangeListener listener) {
 	}
 
 	public Preferences defaultPreferences() {
@@ -83,7 +77,7 @@ public class AbstractSpeziController<M extends AbstractModel> extends
 		return preferences;
 	}
 
-	public AbstractScreenModel getScreenModel() {
+	public AbstractModel getScreenModel() {
 		return screenModel;
 	}
 
@@ -264,7 +258,7 @@ public class AbstractSpeziController<M extends AbstractModel> extends
 
 	}
 
-	public void setScreenModel(AbstractScreenModel screenModel) {
+	public void setScreenModel(AbstractModel screenModel) {
 		this.screenModel = screenModel;
 	}
 
