@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.Json.ReadOnlySerializer;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.SerializationException;
 
-import de.halfrel.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.AbstractScreen;
 
 public class SpeziSkin extends Skin {
 

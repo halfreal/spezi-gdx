@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -34,7 +34,7 @@ public abstract class SpeziGame extends Game implements ClientErrorHandler {
 
 	@Override
 	public AbstractScreen<?, ?> getScreen() {
-		return (de.halfrel.spezi.gdx.framework.AbstractScreen<?, ?>) super
+		return (de.halfreal.spezi.gdx.framework.AbstractScreen<?, ?>) super
 				.getScreen();
 	}
 

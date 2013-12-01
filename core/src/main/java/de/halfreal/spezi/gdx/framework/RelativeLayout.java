@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;

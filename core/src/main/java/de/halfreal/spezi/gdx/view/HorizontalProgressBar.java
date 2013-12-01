@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Pools;
 
+import de.halfreal.spezi.gdx.framework.RelativeLayout;
 import de.halfreal.spezi.gdx.system.Assets;
-import de.halfrel.spezi.gdx.framework.RelativeLayout;
 
 public class HorizontalProgressBar extends ProgressBar {
 

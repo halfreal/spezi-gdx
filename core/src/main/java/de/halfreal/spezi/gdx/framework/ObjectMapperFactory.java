@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.map.DeserializationConfig.Feature;

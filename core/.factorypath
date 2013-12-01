@@ -1,3 +1,4 @@
 <factorypath>
-    <factorypathentry kind="VARJAR" id="M2_REPO/de/halfreal/spezi-mvc/1.0.0-SNAPSHOT/spezi-mvc-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/de/halfreal/spezi-mvc/1.0.0-SNAPSHOT/spezi-mvc-1.0.0-SNAPSHOT.jar" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="WKSPJAR" id="/spezi-mvc/spezi-mvc/target/spezi-mvc-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

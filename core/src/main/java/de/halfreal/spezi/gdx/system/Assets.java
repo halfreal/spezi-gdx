@@ -28,7 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import de.halfrel.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.AbstractScreen;
 
 public class Assets {
 

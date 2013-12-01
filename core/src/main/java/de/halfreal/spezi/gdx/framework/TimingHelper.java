@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 public class TimingHelper {
 

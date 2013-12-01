@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Pools;
 
-import de.halfrel.spezi.gdx.framework.RelativeLayout;
+import de.halfreal.spezi.gdx.framework.RelativeLayout;
 
 public class VerticalProgressBar extends ProgressBar {
 

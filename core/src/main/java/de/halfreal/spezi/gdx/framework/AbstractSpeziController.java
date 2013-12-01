@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package de.halfrel.spezi.gdx.framework;
+package de.halfreal.spezi.gdx.framework;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
