@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import de.halfreal.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.ScreenWidget;
 import de.halfreal.spezi.gdx.sector.SectorId;
 import de.halfreal.spezi.gdx.view.TileMap;
-import de.halfrel.spezi.gdx.framework.AbstractScreen;
-import de.halfrel.spezi.gdx.framework.Controller;
-import de.halfrel.spezi.gdx.framework.Model;
-import de.halfrel.spezi.gdx.framework.ScreenWidget;
+import de.halfreal.spezi.mvc.AbstractController;
+import de.halfreal.spezi.mvc.AbstractModel;
 
-public class OverlayWidget<C extends Controller<MODEL>, MODEL extends Model>
+public class OverlayWidget<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
 		extends ScreenWidget<C, MODEL> {
 
 	private static Logger log = LoggerFactory.getLogger(OverlayWidget.class);

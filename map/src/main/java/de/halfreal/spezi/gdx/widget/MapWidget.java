@@ -1,6 +1,5 @@
 package de.halfreal.spezi.gdx.widget;
 
-import java.beans.PropertyChangeEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,6 +44,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import de.halfreal.spezi.gdx.actions.GeoActions;
+import de.halfreal.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.ExtendedController;
+import de.halfreal.spezi.gdx.framework.GdxChangeListener;
+import de.halfreal.spezi.gdx.framework.ScreenWidget;
+import de.halfreal.spezi.gdx.framework.SpeziGame;
+import de.halfreal.spezi.gdx.framework.TimingHelper;
 import de.halfreal.spezi.gdx.sector.GeoHelper;
 import de.halfreal.spezi.gdx.sector.SectorHelper;
 import de.halfreal.spezi.gdx.sector.SectorId;
@@ -55,20 +60,12 @@ import de.halfreal.spezi.gdx.view.TileMap.MapController;
 import de.halfreal.spezi.gdx.view.TileMap.TileProvider;
 import de.halfreal.spezi.gdx.view.TileMap.TileWrap;
 import de.halfreal.spezi.gdx.widget.MapWidget.MapWidgetController;
-import de.halfreal.spezi.gdx.widget.MapWidget.MapWidgetModel;
-import de.halfrel.spezi.gdx.framework.AbstractController;
-import de.halfrel.spezi.gdx.framework.AbstractModel;
-import de.halfrel.spezi.gdx.framework.AbstractScreen;
-import de.halfrel.spezi.gdx.framework.GdxPropertyChangeListener;
-import de.halfrel.spezi.gdx.framework.ScreenWidget;
-import de.halfrel.spezi.gdx.framework.SpeziGame;
-import de.halfrel.spezi.gdx.framework.TimingHelper;
 
 public class MapWidget extends
 		ScreenWidget<MapWidgetController, MapWidgetModel> {
 
 	public static class MapWidgetController extends
-			AbstractController<MapWidgetModel> {
+			ExtendedController<MapWidgetModel> {
 
 		private ThreadPoolExecutor executor;
 
@@ -121,22 +118,6 @@ public class MapWidget extends
 					}
 				}
 			};
-		}
-
-	}
-
-	public static class MapWidgetModel extends AbstractModel {
-
-		public static final String KEY_DIMMER = "dimmer";
-		private boolean dimmer;
-
-		public boolean isDimmer() {
-			return dimmer;
-		}
-
-		public void setDimmer(boolean dimmer) {
-			this.dimmer = dimmer;
-			fire(KEY_DIMMER, dimmer);
 		}
 
 	}
@@ -621,11 +602,11 @@ public class MapWidget extends
 	@Override
 	public void initModelListeners() {
 		super.initModelListeners();
-		listen(MapWidgetModel.KEY_DIMMER, new GdxPropertyChangeListener() {
+		listen(MapWidgetModel.Keys.DIMMER, new GdxChangeListener<Boolean>() {
 
 			@Override
-			public void changed(PropertyChangeEvent evt) {
-				if (getModel().isDimmer()) {
+			public void changed(Boolean oldValue, Boolean newValue) {
+				if (getModel().getDimmer()) {
 					map.addAction(Actions.color(new Color(1, 1, 1, 0.5f),
 							TimingHelper.DIALOG_FADE));
 				} else {
