@@ -3,7 +3,7 @@ package de.halfreal.spezi.gdx.framework;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
-public abstract class SpeziGame extends Game implements ClientErrorHandler {
+public abstract class SpeziGame extends Game {
 
 	public static interface DensityAdapter {
 		float calculateDensity(float screenWdth, float screenHeight,
