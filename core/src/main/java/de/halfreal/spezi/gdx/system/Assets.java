@@ -359,4 +359,5 @@ public class Assets {
 	public static boolean update() {
 		return manager.update();
 	}
+
 }
