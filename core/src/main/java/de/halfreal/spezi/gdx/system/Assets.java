@@ -93,9 +93,9 @@ public class Assets {
 		public float scale;
 	}
 
-	private static String DEFAULT_SKIN_ATLAS = "defaultSkin.atlas";
+	public static String DEFAULT_SKIN_ATLAS = "defaultSkin.atlas";
 
-	private static String DEFAULT_SKIN_JSON = "defaultSkin.json";
+	public static String DEFAULT_SKIN_JSON = "defaultSkin.json";
 
 	public static final String DRAWABLE = "drawable/";
 
