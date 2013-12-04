@@ -600,8 +600,8 @@ public class MapWidget extends
 	}
 
 	@Override
-	public void initModelListeners() {
-		super.initModelListeners();
+	public void onCreateModelListeners() {
+		super.onCreateModelListeners();
 		listen(MapWidgetModel.Keys.DIMMER, new GdxChangeListener<Boolean>() {
 
 			@Override

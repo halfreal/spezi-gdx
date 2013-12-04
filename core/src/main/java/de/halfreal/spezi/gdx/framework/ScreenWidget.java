@@ -79,7 +79,7 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 		return skin;
 	}
 
-	public void initModelListeners() {
+	public void onCreateModelListeners() {
 
 	}
 
@@ -125,7 +125,7 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 
 	public void performInitListeners() {
 		if (!initListeners) {
-			initModelListeners();
+			onCreateModelListeners();
 			listenerRegistry.onResume();
 			initListeners = true;
 		}

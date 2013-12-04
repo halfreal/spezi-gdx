@@ -337,8 +337,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		}
 		stage.dispose();
 		batch.dispose();
-		// FontHelper.dispose();
-		// Assets.unloadSkin();
 	}
 
 	public Image getBackground() {
@@ -370,13 +368,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		removeModelListeners();
 	}
 
-	/**
-	 * inititializes all model listeners after beeing attached to the GUI THread
-	 */
-	protected void onCreateModelListeners() {
-		Gdx.app.log(getName(), "INIT MODEL LISTENERS");
-	}
-
 	public boolean isAfterShow() {
 		return afterShow;
 	}
@@ -405,6 +396,13 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	@Override
 	public void onCreate() {
 		Assets.resume();
+	}
+
+	/**
+	 * inititializes all model listeners after beeing attached to the GUI THread
+	 */
+	protected void onCreateModelListeners() {
+		Gdx.app.log(getName(), "INIT MODEL LISTENERS");
 	}
 
 	/**
@@ -480,6 +478,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 				screenWidget.performShow(stage);
 			}
 			afterShow = true;
+			listenerRegistry.onResume();
 			onShow();
 		}
 
