@@ -231,7 +231,8 @@ public class SpeziSkin extends Skin {
 						boolean noFontFile = false;
 						String path = data.getString("file");
 						// DP Value of the font
-						Float size = data.getFloat("size");
+						Float size = data.getFloat("size",
+								FontHelper.STANDART_SIZE);
 						FileHandle fontFile = skinFile.parent().child(path);
 
 						if (!fontFile.exists()) {

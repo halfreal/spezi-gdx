@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Disposable;
 
-import de.halfreal.spezi.gdx.math.Timer;
-import de.halfreal.spezi.gdx.math.Timer.Task;
 import de.halfreal.spezi.gdx.system.Assets;
 import de.halfreal.spezi.mvc.AbstractController;
 import de.halfreal.spezi.mvc.AbstractModel;
@@ -103,10 +101,6 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 		remove();
 	}
 
-	public void onShow(Stage stage) {
-		onShow(stage, Assets.getSkin(neededSkin()));
-	}
-
 	/**
 	 * Created a View which is then added to the stage. Override this method for
 	 * an individual starting Animation
@@ -114,17 +108,6 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 	 * @param stage
 	 */
 	protected void onShow(Stage stage, Skin skin) {
-		Timer.schedule(new Task() {
-
-			@Override
-			public void runUI() {
-
-				if (getStage() == null) {
-					return;
-				}
-
-			}
-		}, 2f);
 	}
 
 	public void performCreate(Skin skin) {

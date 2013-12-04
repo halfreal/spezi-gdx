@@ -292,15 +292,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	private void applyStyle() {
 		if (style != null && style.background != null) {
 			boolean isDesktop = (Gdx.app.getType() == ApplicationType.Desktop);
-			// ShaderLoader.BasePath = "shaders/";
-
-			// post = new PostProcessing();
-			// post.setEnabled(true);
-			// postProcessor = new PostProcessor(false, false, isDesktop);
-			// CrtMonitor crt = new CrtMonitor(false, false);
-			// postProcessor.addEffect(crt);
-			// crt.setColorOffset(0.002f);
-			// crt.setEnabled(true);
 
 			float imageHW = style.background.getMinHeight()
 					/ style.background.getLeftWidth();
@@ -313,13 +304,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 			background = new Image(style.background) {
 				@Override
 				public void draw(SpriteBatch batch, float parentAlpha) {
-					// post.update(Gdx.graphics.getDeltaTime());
-					// boolean willPostProcess = post.isReady();
-					// batch.flush();
-					// post.begin();
 					super.draw(batch, parentAlpha);
-					// post.end();
-					// batch.flush();
 				};
 			};
 			if (imageHW > screenHW) {
@@ -388,7 +373,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	/**
 	 * inititializes all model listeners after beeing attached to the GUI THread
 	 */
-	protected void initModelListeners() {
+	protected void onCreateModelListeners() {
 		Gdx.app.log(getName(), "INIT MODEL LISTENERS");
 	}
 
@@ -470,7 +455,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	private synchronized void performInitModelListeners() {
 		if (!initModelListeners) {
 			initModelListeners = true;
-			initModelListeners();
+			onCreateModelListeners();
 		}
 	}
 
