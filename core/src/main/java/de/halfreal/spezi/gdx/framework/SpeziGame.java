@@ -1,5 +1,8 @@
 package de.halfreal.spezi.gdx.framework;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -36,6 +39,36 @@ public abstract class SpeziGame extends Game {
 	public AbstractScreen<?, ?> getScreen() {
 		return (de.halfreal.spezi.gdx.framework.AbstractScreen<?, ?>) super
 				.getScreen();
+	}
+
+	/**
+	 * load an AbstractScreen from the defined Package and from the System
+	 * Property -Dscreen=<YourScreenName>
+	 * 
+	 * @return C extends AbstractScreen<?,?> or null if no class found or if no
+	 *         one argument Constructor exists
+	 */
+	public AbstractScreen<?, ?> loadScreenFromProperty(String basePackageName) {
+		try {
+			String property = System.getProperty("screen");
+			if (property != null) {
+				String className = basePackageName + "." + property;
+				Class<?> clazz = Class.forName(className);
+				Constructor<?> constructor = clazz
+						.getConstructor(SpeziGame.class);
+
+				return (AbstractScreen<?, ?>) constructor.newInstance(this);
+			}
+
+		} catch (ClassNotFoundException e) {
+		} catch (SecurityException e) {
+		} catch (NoSuchMethodException e) {
+		} catch (IllegalArgumentException e) {
+		} catch (InstantiationException e) {
+		} catch (IllegalAccessException e) {
+		} catch (InvocationTargetException e) {
+		}
+		return null;
 	}
 
 	public void startScreen(final AbstractScreen<?, ?> screen, boolean restart) {
