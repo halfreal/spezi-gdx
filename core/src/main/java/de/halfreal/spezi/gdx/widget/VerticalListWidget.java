@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -19,18 +16,16 @@ import de.halfreal.spezi.gdx.view.VerticalWidgetGroup;
 
 public abstract class VerticalListWidget<T> extends ListWidget<T> {
 
-	private static Logger log = LoggerFactory
-			.getLogger(VerticalListWidget.class);
-	float bottomOffset;
+	private float bottomOffset;
 	private Map<T, Actor> cacheMap;
 	private int columns;
-	private boolean firstTime = true;
+	private boolean firstTime;
 	private ScrollPane scrollPane;
 	private Skin skin;
 
 	/**
 	 * a vertical Scroll list, using a default scrollPane style. It is
-	 * inefficient in the sense that it can not display a may items and beeing
+	 * inefficient in the sense that it can not display many items and being
 	 * still responsive.
 	 * 
 	 * TODO LazyList should cache views and reuse them while scrolling down
@@ -42,7 +37,6 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 	public VerticalListWidget(ListController<T> controller,
 			AbstractScreen<?, ?> screen) {
 		this(controller, screen, 1);
-
 	}
 
 	public VerticalListWidget(ListController<T> controller,
@@ -50,6 +44,7 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 		super(controller, screen);
 		this.columns = columns;
 		cacheMap = new HashMap<T, Actor>();
+		firstTime = true;
 	}
 
 	@Override
@@ -115,13 +110,16 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 	protected void refresh() {
 		// TODO just generate new item, all others must be reused
 		WidgetGroup scrollActor = getLayoutActor();
+
 		Set<T> removeSet = new HashSet<T>();
 		removeSet.addAll(cacheMap.keySet());
+
 		T currentSelectedItem = model.getCurrentSelectedItem();
+
 		for (int i = model.getCount() - 1; i >= 0; i--) {
 			T item = model.getItem(i);
-			Actor actor = createItem(item, skin, cacheMap.get(item),
-					currentSelectedItem == item);
+			boolean selected = currentSelectedItem == item;
+			Actor actor = createItem(item, skin, cacheMap.get(item), selected);
 			if (actor != null) {
 				Action inAnimation = inAnimation();
 				if (inAnimation != null && firstTime) {

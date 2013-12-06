@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 
 public class VerticalWidgetGroup extends WidgetGroup {
+
 	private float bottomOffset;
 	private int columns;
 	private float padding;
@@ -33,6 +34,7 @@ public class VerticalWidgetGroup extends WidgetGroup {
 
 	public void setBottomOffset(float bottomOffset) {
 		this.bottomOffset = bottomOffset;
+		invalidate();
 	}
 
 	public void setPadding(float padding) {
@@ -55,7 +57,6 @@ public class VerticalWidgetGroup extends WidgetGroup {
 					} else {
 						alignRightOf(actor, lastActor, padding);
 					}
-
 				} else {
 					alignTop(actor, this);
 					alignLeft(actor, this);
