@@ -223,6 +223,12 @@ public class RelativeLayout {
 		return actor;
 	}
 
+	public static void marginBottom(float margin, Actor... actors) {
+		for (Actor actor : actors) {
+			actor.setY(actor.getY() + margin);
+		}
+	}
+
 	public static <ASSIGNEE extends Actor> ASSIGNEE marginLeft(ASSIGNEE actor,
 			float margin) {
 
@@ -231,14 +237,28 @@ public class RelativeLayout {
 		return actor;
 	}
 
+	public static void marginLeft(float margin, Actor... actors) {
+		for (Actor actor : actors) {
+			actor.setX(actor.getX() + margin);
+		}
+	}
+
 	public static <ASSIGNEE extends Actor> ASSIGNEE marginRight(ASSIGNEE actor,
 			float margin) {
 		return marginLeft(actor, -margin);
 	}
 
+	public static void marginRight(float margin, Actor... actors) {
+		marginLeft(-margin, actors);
+	}
+
 	public static <ASSIGNEE extends Actor> ASSIGNEE marginTop(ASSIGNEE actor,
 			float margin) {
 		return marginBottom(actor, -margin);
+	}
+
+	public static void marginTop(float margin, Actor... actors) {
+		marginBottom(-margin, actors);
 	}
 
 	public static <ASSIGNEE extends Actor> ASSIGNEE pad(ASSIGNEE actor,

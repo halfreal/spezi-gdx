@@ -3,7 +3,7 @@ package de.halfreal.spezi.gdx.framework;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 
 import de.halfreal.spezi.gdx.system.Assets;
@@ -19,16 +19,16 @@ import de.halfreal.spezi.mvc.ListenerRegistry;
  * 
  */
 public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
-		extends WidgetGroup implements Disposable {
+		extends Table implements Disposable {
 
 	protected C controller;
-	private boolean create;
 
+	private boolean create;
 	private boolean initListeners;
+
 	private ListenerRegistry<MODEL> listenerRegistry;
 
 	protected MODEL model;
-
 	private float prefHeight;
 	private float prefWidth;
 	protected AbstractScreen<?, ?> screen;
@@ -79,16 +79,16 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 		return skin;
 	}
 
-	public void onCreateModelListeners() {
-
-	}
-
 	protected <T> void listen(Key<T> key, ChangeListener<T> listener) {
 		listenerRegistry.registerListener(key, listener);
 	}
 
 	public Class<?> neededSkin() {
 		return null;
+	}
+
+	public void onCreateModelListeners() {
+
 	}
 
 	/**
