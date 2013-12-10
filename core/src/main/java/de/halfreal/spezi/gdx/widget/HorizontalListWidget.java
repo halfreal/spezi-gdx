@@ -27,6 +27,11 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 	private float sideOffset;
 	private Skin skin;
 
+	public HorizontalListWidget(AbstractScreen<?, ?> screen) {
+		this(new ListController<T>(new ListModel<T>(), screen.getFramework()),
+				screen, 1);
+	}
+
 	public HorizontalListWidget(ListController<T> controller,
 			AbstractScreen<?, ?> screen) {
 		this(controller, screen, 1);
