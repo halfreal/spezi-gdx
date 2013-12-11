@@ -57,6 +57,10 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 		return controller;
 	}
 
+	public SpeziGame getFramework() {
+		return screen.getFramework();
+	}
+
 	public MODEL getModel() {
 		return model;
 	}
