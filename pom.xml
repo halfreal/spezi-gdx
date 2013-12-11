@@ -12,7 +12,7 @@
 
         <groupId>de.halfreal</groupId>
         <artifactId>spezi-gdx-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <packaging>pom</packaging>
 
         <name>Spezi GDX :: Parent</name>
@@ -67,6 +67,13 @@
                         </dependency>
                 </dependencies>
         </dependencyManagement>
+	<repositories>
+		<repository>
+			<id>gdx-nightlies</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+	
 
         <build>
                 <pluginManagement>
@@ -95,7 +102,7 @@
                         </plugin>
                         <plugin>
                                 <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-source-plugin</artifactId>
+                                        <artifactId>maven-source-plugin</artifactId>
                                 <executions>
                                         <execution>
                                                 <id>attach-sources</id>

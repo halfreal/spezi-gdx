@@ -1,21 +1,14 @@
 package de.halfreal.spezi.gdx.system;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -24,67 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import de.halfrel.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.AbstractScreen;
 
 public class Assets {
-
-	public enum ACTION {
-		attack,
-		attack_short,
-		idle,
-		idle_short
-	}
-
-	public enum E {
-		beat_enemy;
-
-		private ParticleModifier modifier;
-		private String path;
-		private String secondary;
-
-		private E() {
-			this(null);
-		}
-
-		private E(String secondary) {
-			this.secondary = secondary;
-		}
-
-		private void checkPath() {
-			String name = name();
-
-			path = Assets.PARTICLE_EFFECT_FOLDER + name;
-		}
-
-		public ParticleModifier getModifier() {
-
-			if (modifier == null) {
-				modifier = ParticleModifier.createParticleModifier(getPath());
-			}
-
-			return modifier;
-		}
-
-		public String getPath() {
-			if (path == null) {
-				checkPath();
-			}
-
-			return path;
-		}
-
-		public E getSecondary() {
-			if (secondary == null) {
-				return null;
-			}
-			return valueOf(secondary);
-		}
-
-	}
 
 	/**
 	 * All effects are ment to be shown on the left side, hence alignRigth
@@ -155,98 +93,9 @@ public class Assets {
 		public float scale;
 	}
 
-	public enum R {
-		// background_logo,
-		// box,
-		// halfreal_logo,
-		// loading_fancy,
-		pixel;
-		// wait_circle;
+	public static String DEFAULT_SKIN_ATLAS = "defaultSkin.atlas";
 
-		private Boolean isNinePatch = null;
-
-		private String path = null;
-
-		public String getPath() {
-			if (path == null) {
-				loadPath();
-			}
-
-			return path;
-		}
-
-		public boolean isNinePatch() {
-			if (isNinePatch == null) {
-				loadPath();
-			}
-			return isNinePatch;
-		}
-
-		private void loadPath() {
-			String name = name() + ".png";
-
-			path = AbstractScreen.getGFXFolder() + name;
-
-			if (!Gdx.files.internal(path).exists()) {
-				log.error("No fitting resulution for " + name
-						+ ", different resulution must be loaded!");
-				path = Assets.DRAWABLE_MDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-				path = Assets.DRAWABLE_HDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-				path = Assets.DRAWABLE_LDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-
-				path = Assets.DRAWABLE_XHDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-			} else {
-				return;
-			}
-
-			// check ninepatches
-			name = name() + ".9.png";
-			path = AbstractScreen.getGFXFolder() + name;
-
-			if (!Gdx.files.internal(path).exists()) {
-				log.error("No fitting resulution for " + name
-						+ ", different resulution must be loaded!");
-				path = Assets.DRAWABLE_MDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-				path = Assets.DRAWABLE_HDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-				path = Assets.DRAWABLE_LDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-
-				path = Assets.DRAWABLE_XHDPI + name;
-				if (Gdx.files.internal(path).exists()) {
-					return;
-				}
-			} else {
-				return;
-			}
-
-			throw new RuntimeException(
-					"Cannot find any matching file for constant: " + name());
-		}
-	}
-
-	private static String DEFAULT_SKIN_ATLAS = "defaultSkin.atlas";
-
-	private static String DEFAULT_SKIN_JSON = "defaultSkin.json";
+	public static String DEFAULT_SKIN_JSON = "defaultSkin.json";
 
 	public static final String DRAWABLE = "drawable/";
 
@@ -260,24 +109,11 @@ public class Assets {
 
 	public static final String DRAWABLE_XXHDPI = "drawable-xxhdpi/";
 
-	// public static void loadFightViewAssets() {
-	// loadTextures(R.fight_panel_left, R.fight_panel_right,
-	// R.background_purple, R.action_circle, R.mw_icon_truc);
-	// }
-	//
-	// public static void loadMapAssets() {
-	// loadTextures(R.circle_a, R.circle, R.icon_current_sector, R.select,
-	// R.background_generic, R.lower_layer_generic,
-	// R.title_line_enemy, R.division_line, R.spec_box_enemy,
-	// R.title_line_me, R.spec_box_me, R.arrow_left, R.arrow_right);
-	// }
 	private static Logger log = LoggerFactory.getLogger(Assets.class);
 
 	private static AssetManager manager;
 	public static final String PARTICLE_EFFECT_ATLAS_NAME = "particleImages.atlas";
 	public static final String PARTICLE_EFFECT_FOLDER = "particle/";
-	private static Map<String, E> particleEffectMap;
-	private static HashMap<String, R> resourceMap;
 
 	public static final String STYLE_SELECTOR_BUTTON = "chooserButton";
 
@@ -352,26 +188,6 @@ public class Assets {
 		return manager;
 	}
 
-	public static E getParticleEffect(ProgramPhase phase) {
-
-		// for (E value : E.values()) {
-		// if (value.name().contains(phase.getProgram())) {
-		// return value;
-		// }
-		// }
-
-		String key = phase.getProgram() + "_"
-				+ phase.getType().name().toLowerCase();
-
-		E effect = particleEffectMap.get(key);
-		if (effect != null) {
-			return effect;
-		}
-
-		return E.valueOf(key);
-
-	}
-
 	public static String getPath(String name) {
 
 		String path = AbstractScreen.getGFXFolder() + name;
@@ -426,54 +242,17 @@ public class Assets {
 
 	}
 
-	public static R getResource(String key) {
-		if (resourceMap.containsKey(key)) {
-			return resourceMap.get(key);
-		}
-
-		try {
-			return R.valueOf(key);
-		} catch (RuntimeException e) {
-			Gdx.app.error("ResourceHelper", "no resource named '" + key
-					+ "' found. Forgot to put it in the resource map?");
-		}
-		throw new RuntimeException("R MUST BE IMPLEMENTED AGAIN");
-		// return R.cpu_osi1;
-	}
-
 	public static Skin getSkin() {
 		manager.finishLoading();
 		return manager.get(DEFAULT_SKIN_JSON, SpeziSkin.class);
 	}
 
 	public static Skin getSkin(Class<?> class1) {
-		// if (class1.equals(ST.class)) {
-		// return getSkin();
-		// } else if (class1.equals(ST_SPLASH.class)) {
-		//
-		// if (skinSplash == null) {
-		// manager.finishLoading();
-		// skinSplash = manager.get("skins/splashSkin.json",
-		// EafosSkin.class);
-		// skinSplash.add("pixel", texture(R.pixel), Texture.class);
-		// }
-		// return skinSplash;
-		//
-		// }
-		// TODO
 		return getSkin();
-	}
-
-	public static Image image(R texture) {
-		return new Image(texture(texture));
 	}
 
 	public static boolean isLoading() {
 		return manager.getProgress() < 1;
-	}
-
-	private static void loadNinepatch(R ninepatch) {
-		loadTexture(ninepatch);
 	}
 
 	public static void loadParticleEffectImages() {
@@ -488,18 +267,8 @@ public class Assets {
 				skinParameter);
 	}
 
-	private static void loadTexture(R texture) {
-		manager.load(texture.getPath(), Texture.class);
-	}
-
 	public static void loadTextureAtlas(String path) {
 		manager.load(path, TextureAtlas.class);
-	}
-
-	public static void loadTextures(R... names) {
-		for (R name : names) {
-			loadTexture(name);
-		}
 	}
 
 	public static Sprite newSprite(AtlasRegion region) {
@@ -515,42 +284,6 @@ public class Assets {
 			return new Sprite(region);
 		}
 		return new AtlasSprite(region);
-	}
-
-	public static NinePatch ninepatch(R name) {
-
-		Texture texture = texture(name);
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		String[] patches = name.getPath().split("\\.");
-		NinePatch ninePatch;
-		// nine patch : name.9.left.right.top.bottom.png
-		if (patches.length == 7) {
-			int left = Integer.parseInt(patches[2]);
-			int right = Integer.parseInt(patches[3]);
-			int top = Integer.parseInt(patches[4]);
-			int bottom = Integer.parseInt(patches[5]);
-			ninePatch = new NinePatch(texture, left, right, top, bottom);
-		} else {
-			ninePatch = new NinePatch(texture);
-		}
-
-		return ninePatch;
-	}
-
-	public static NinePatchDrawable ninepatchDrawable(R name) {
-		return new NinePatchDrawable(ninepatch(name));
-	}
-
-	public static ParticleEffect particleEffect(E effect) {
-
-		ParticleEffect particleEffect = new ParticleEffect();
-
-		particleEffect.load(Gdx.files.internal(effect.getPath()), manager.get(
-				getPath(PARTICLE_EFFECT_ATLAS_NAME), TextureAtlas.class));
-
-		return particleEffect;
-
 	}
 
 	public static void resume() {
@@ -615,35 +348,6 @@ public class Assets {
 		return image;
 	}
 
-	public static Texture texture(R name) {
-		return texture(name, true);
-	}
-
-	public static Texture texture(R name, boolean linearFilter) {
-		return texture(name, linearFilter, true);
-	}
-
-	public static Texture texture(R name, boolean linearFilter, boolean loading) {
-
-		if (!manager.isLoaded(name.getPath(), Texture.class)) {
-			Gdx.app.error("ResourceHelper", "loadTexture(R." + name.name()
-					+ ")");
-			TextureParameter param = new TextureParameter();
-			if (linearFilter) {
-				param.magFilter = TextureFilter.Linear;
-				param.minFilter = TextureFilter.Linear;
-			}
-			manager.load(name.getPath(), Texture.class, param);
-			manager.finishLoading();
-		}
-
-		Texture texture = manager.get(name.getPath(), Texture.class);
-		if (linearFilter && texture != null) {
-			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		}
-		return texture;
-	}
-
 	public static void unloadSkin() {
 		try {
 			getManager().unload(DEFAULT_SKIN_JSON);
@@ -655,4 +359,5 @@ public class Assets {
 	public static boolean update() {
 		return manager.update();
 	}
+
 }
