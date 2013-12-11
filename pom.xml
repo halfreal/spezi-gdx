@@ -67,6 +67,13 @@
                         </dependency>
                 </dependencies>
         </dependencyManagement>
+	<repositories>
+		<repository>
+			<id>gdx-nightlies</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+	
 
         <build>
                 <pluginManagement>
