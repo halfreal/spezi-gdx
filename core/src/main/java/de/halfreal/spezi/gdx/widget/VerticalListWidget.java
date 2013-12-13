@@ -139,6 +139,18 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 		firstTime = false;
 	}
 
+	@Override
+	public void scrollToSelectedElement() {
+		T currentSelectedItem = model.getCurrentSelectedItem();
+		if (currentSelectedItem != null) {
+			Actor actor = cacheMap.get(currentSelectedItem);
+			if (actor != null) {
+				scrollPane.scrollToCenter(actor.getX(), actor.getY(),
+						actor.getWidth(), actor.getHeight());
+			}
+		}
+	}
+
 	public void setBottomOffset(float bottomOffset) {
 		this.bottomOffset = bottomOffset;
 	}
