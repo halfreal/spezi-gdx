@@ -393,9 +393,18 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	public void onAssetsLoaded() {
 	}
 
+	/**
+	 * use {@link AbstractScreen.onCreateAfterConstructor }
+	 */
+	@Deprecated
 	@Override
 	public void onCreate() {
 		Assets.resume();
+	}
+
+	protected void onCreateAfterConstructor() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -558,6 +567,9 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	@Override
 	public synchronized void show() {
+		if (!show) {
+			onCreateAfterConstructor();
+		}
 		Gdx.app.log(getName(), "SHOW, init listeners");
 		Assets.resume();
 		show = true;
