@@ -88,8 +88,21 @@ public class RelativeLayout {
 
 	}
 
+	/**
+	 * Add Actor to group before layouting!
+	 * 
+	 * @param actor
+	 * @param group
+	 * @param xOffset
+	 * @return
+	 */
 	public static <RELATIVE extends Actor, ASSIGNEE extends Actor> ASSIGNEE alignLeft(
 			ASSIGNEE actor, RELATIVE group, float xOffset) {
+		// TODO change aligns in all methods to support inside / outside group
+		// alignment
+		if (actor.getParent() != group) {
+			xOffset += group.getX();
+		}
 		actor.setX(xOffset);
 		return actor;
 
