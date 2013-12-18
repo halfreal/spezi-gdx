@@ -58,7 +58,12 @@ public class RelativeLayout {
 
 	public static <RELATIVE extends Actor, ASSIGNEE extends Actor> ASSIGNEE alignCenterHorizontal(
 			ASSIGNEE actor, RELATIVE group) {
-		actor.setX(group.getWidth() / 2f - actor.getWidth() / 2f);
+		if (actor.getParent() == group) {
+			actor.setX(group.getWidth() / 2f - actor.getWidth() / 2f);
+		} else {
+			actor.setX(group.getX() + group.getWidth() / 2f - actor.getWidth()
+					/ 2f);
+		}
 
 		return actor;
 	}
