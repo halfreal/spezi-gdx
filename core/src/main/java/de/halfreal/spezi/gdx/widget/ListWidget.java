@@ -48,12 +48,26 @@ public abstract class ListWidget<T> extends
 				refresh();
 			}
 		});
+
+		listen(ListModel.Keys.CURRENT_SELECTED_ITEM,
+				new UpdateListener<Object>() {
+
+					@Override
+					public void onUpdate(Object newValue) {
+						refresh();
+						// TODO not working for vertical list
+						// scrollToSelectedElement();
+					}
+				});
+
 	}
 
 	/**
 	 * rebuilds the list
 	 */
 	protected abstract void refresh();
+
+	public abstract void scrollToSelectedElement();
 
 	public void setItemPadding(float itemPadding) {
 		this.itemPadding = itemPadding;

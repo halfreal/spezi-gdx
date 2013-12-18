@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Array;
 import de.halfreal.spezi.gdx.framework.AbstractScreen;
 import de.halfreal.spezi.gdx.framework.RelativeLayout;
 import de.halfreal.spezi.gdx.view.HorizontalWidgetGroup;
-import de.halfreal.spezi.mvc.UpdateListener;
 
 public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 
@@ -91,20 +90,6 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 	}
 
 	@Override
-	public void onCreateModelListeners() {
-		super.onCreateModelListeners();
-
-		listen(ListModel.Keys.CURRENT_SELECTED_ITEM,
-				new UpdateListener<Object>() {
-
-					@Override
-					public void onUpdate(Object newValue) {
-						scrollToSelectedElement();
-					}
-				});
-	}
-
-	@Override
 	protected void onCreateView(Skin skin) {
 		this.skin = skin;
 		scrollPane = new ScrollPane(null, skin) {
@@ -164,6 +149,7 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 		firstTime = false;
 	}
 
+	@Override
 	public void scrollToSelectedElement() {
 		T currentSelectedItem = model.getCurrentSelectedItem();
 		if (currentSelectedItem != null) {
