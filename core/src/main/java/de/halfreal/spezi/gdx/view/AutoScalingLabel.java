@@ -24,6 +24,13 @@ public class AutoScalingLabel extends Label {
 			float scaleFactor = getWidth() / width;
 			setFontScale(scaleFactor * oldFontScale);
 		}
+
+		oldFontScale = getStyle().font.getScaleY();
+		float height = getPrefHeight();
+		if (height > getHeight()) {
+			float scaleFactor = getHeight() / height;
+			setFontScale(scaleFactor * oldFontScale);
+		}
 	}
 
 }
