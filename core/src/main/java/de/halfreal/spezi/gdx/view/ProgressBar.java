@@ -139,7 +139,7 @@ public abstract class ProgressBar extends WidgetGroup {
 			throw new RuntimeException("ProgressBarItemStyle not set!");
 		}
 
-		amountLabel = new Label(nf.format(amount), progressBarStyle.labelStyle);
+		amountLabel = new Label(labelText(amount), progressBarStyle.labelStyle);
 		amountLabel.pack();
 		backgroundImage = new Image(progressBarStyle.background);
 		image = createAnimatedImage(progressBarStyle.foreground);
@@ -148,7 +148,7 @@ public abstract class ProgressBar extends WidgetGroup {
 
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					amountLabel.setText(nf.format(currentAmount));
+					amountLabel.setText(labelText(currentAmount));
 				}
 			});
 		}
@@ -173,6 +173,10 @@ public abstract class ProgressBar extends WidgetGroup {
 
 	public boolean isStandardGrowth() {
 		return standardGrowth;
+	}
+
+	protected CharSequence labelText(int amount) {
+		return nf.format(amount);
 	}
 
 	public void setAmountLabel(Label amountLabel) {
@@ -266,7 +270,7 @@ public abstract class ProgressBar extends WidgetGroup {
 			changed = true;
 		}
 		if (!isAnimationRunning()) {
-			amountLabel.setText(nf.format(newAmount));
+			amountLabel.setText(labelText(newAmount));
 		}
 		setOldAmount(amount);
 		amount = newAmount;
