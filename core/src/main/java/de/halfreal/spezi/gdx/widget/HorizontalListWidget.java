@@ -59,6 +59,11 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 		}
 	}
 
+	@Override
+	public Actor getItem(T data) {
+		return cacheMap.get(data);
+	}
+
 	protected WidgetGroup getLayoutActor() {
 		HorizontalWidgetGroup horizontalWidgetGroup = new HorizontalWidgetGroup(
 				rows);

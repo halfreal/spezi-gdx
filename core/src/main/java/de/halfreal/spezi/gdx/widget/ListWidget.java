@@ -34,6 +34,8 @@ public abstract class ListWidget<T> extends
 		return getModel().getCount() - 1 - getModel().getItems().indexOf(data);
 	}
 
+	public abstract Actor getItem(T object);
+
 	public float getItemPadding() {
 		return itemPadding;
 	}

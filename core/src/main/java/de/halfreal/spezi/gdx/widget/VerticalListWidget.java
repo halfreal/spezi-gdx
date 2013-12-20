@@ -61,6 +61,11 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 		return columns;
 	}
 
+	@Override
+	public Actor getItem(T data) {
+		return cacheMap.get(data);
+	}
+
 	protected WidgetGroup getLayoutActor() {
 		VerticalWidgetGroup verticalWidgetGroup = new VerticalWidgetGroup(
 				columns);
