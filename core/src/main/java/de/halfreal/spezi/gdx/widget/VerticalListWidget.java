@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 
 import de.halfreal.spezi.gdx.framework.AbstractScreen;
+import de.halfreal.spezi.gdx.framework.RelativeLayout;
 import de.halfreal.spezi.gdx.view.VerticalWidgetGroup;
 
 public abstract class VerticalListWidget<T> extends ListWidget<T> {
@@ -105,8 +106,11 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 		};
 
 		refresh();
-		scrollPane.setWidth(getWidth());
-		scrollPane.setHeight(getHeight());
+		scrollPane.setWidth(getWidth() - getPadLeft() - getPadRight());
+		scrollPane.setHeight(getHeight() - getPadTop() - getPadBottom());
+		RelativeLayout.marginLeft(
+				RelativeLayout.marginBottom(scrollPane, getPadBottom()),
+				getPadLeft());
 		scrollPane.setScrollingDisabled(true, false);
 		addActor(scrollPane);
 	}
