@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitm
 
 public class FontHelper {
 
-	public static final String DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890/|\\-_.,;:'\"üäöÜÄÖß~=$+[] {}<>()¢%∞…";
+	public static final String DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890/|\\-_.,;:'\"üäöÜÄÖß~=$+[] {}<>()¢%∞…?!#@*";
 	private static Logger log = LoggerFactory.getLogger(FontHelper.class);
 	private static Map<String, Map<Integer, BitmapFont>> maps;
 
