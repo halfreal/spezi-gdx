@@ -349,6 +349,7 @@ public class DragAndDrop {
 							@Override
 							public void run() {
 								target.drop(source, payload, 0, 0, 0);
+								target.reset(source, payload);
 							}
 						}), removeActor()));
 

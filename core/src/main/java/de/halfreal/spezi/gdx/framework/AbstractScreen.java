@@ -89,19 +89,12 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	private static int blendDstFunc = GL11.GL_ONE_MINUS_SRC_ALPHA;
 	private static int blendSrcFunc = GL11.GL_SRC_ALPHA;
-
 	private static float DP_TRESHOLD;
-
 	private static String GFX_FOLDER;
-
 	public static int HEIGHT;
-
 	private static Logger log = LoggerFactory.getLogger(AbstractScreen.class);
-
 	public static final float STANDART_DENSITY = 1.5f;
-
 	private static final String TAG = AbstractScreen.class.getSimpleName();
-
 	public static int WIDTH;
 
 	static {
@@ -242,7 +235,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	private List<ScreenWidget<?, ?>> screenWidgets;
 	private boolean show;
 	protected final Stage stage;
-
 	private ScreenStyle style;
 
 	public AbstractScreen(SpeziGame framework, C controller) {

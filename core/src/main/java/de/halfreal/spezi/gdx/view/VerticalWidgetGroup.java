@@ -53,13 +53,13 @@ public class VerticalWidgetGroup extends WidgetGroup {
 
 					if (i % columns == 0) {
 						alignBelow(actor, lastActor, padding);
-						alignLeft(actor, this);
+						alignLeft(actor, this, padding);
 					} else {
 						alignRightOf(actor, lastActor, padding);
 					}
 				} else {
-					alignTop(actor, this);
-					alignLeft(actor, this);
+					alignTop(actor, this, padding);
+					alignLeft(actor, this, padding);
 				}
 				if (i % columns == 0) {
 					height += (actor.getHeight() + padding);
