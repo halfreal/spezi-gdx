@@ -36,7 +36,7 @@ public class Message<M> {
 		}
 
 		if (obj instanceof Message) {
-			return id == ((Message) obj).id;
+			return id == ((Message<?>) obj).id;
 		}
 
 		return false;

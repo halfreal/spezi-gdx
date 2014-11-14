@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class FontHelper {
 
@@ -97,16 +98,16 @@ public class FontHelper {
 
 				newData.ascent = data.ascent;
 				newData.capHeight = data.capHeight;
+				newData.descent = data.descent;
 				newData.down = data.down;
 				newData.flipped = data.flipped;
 				newData.fontFile = data.fontFile;
-				newData.imagePath = data.imagePath;
+				newData.imagePaths = data.imagePaths;
 				newData.lineHeight = data.lineHeight;
 				newData.scaleX = data.scaleX;
 				newData.scaleY = data.scaleY;
 				newData.spaceWidth = data.spaceWidth;
 				newData.xHeight = data.xHeight;
-				newData.descent = data.descent;
 
 				BitmapFont copyOfBitmapFont = new BitmapFont(newData,
 						bitmapFont.getRegion(), false);
@@ -145,8 +146,11 @@ public class FontHelper {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
 				Gdx.files.internal(fontPath));
 
-		BitmapFont generateFont = generator.generateFont(size, DEFAULT_CHARS,
-				false);
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.characters = DEFAULT_CHARS;
+		parameter.flip = false;
+		parameter.size = size;
+		BitmapFont generateFont = generator.generateFont(parameter);
 
 		// TODO Store the Font in the temp folder for later reuse!
 		// use FontGenerator, to store the data, which is still unclear if we

@@ -30,7 +30,7 @@ import de.halfreal.spezi.mvc.ListenerRegistry;
  * The base class for all game screens.
  */
 public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
-implements ExtendedScreen {
+		implements ExtendedScreen {
 
 	public static abstract class OnLoadedListener {
 		void onAssetsLoaded() {
@@ -473,7 +473,7 @@ implements ExtendedScreen {
 							.getController();
 					if (screenController instanceof ExtendedController) {
 						((ExtendedController<?>) screenController)
-						.performUpdate();
+								.performUpdate();
 					}
 
 				}
@@ -493,7 +493,7 @@ implements ExtendedScreen {
 	private void removeModelListeners() {
 		listenerRegistry.onPause();
 
-		for (ScreenWidget screenWidget : screenWidgets) {
+		for (ScreenWidget<?, ?> screenWidget : screenWidgets) {
 			screenWidget.removeModelListeners();
 		}
 

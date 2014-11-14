@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 
 public class SpeziSkinLoader extends
-		AsynchronousAssetLoader<SpeziSkin, SpeziSkinLoader.SkinParameter> {
+AsynchronousAssetLoader<SpeziSkin, SpeziSkinLoader.SkinParameter> {
 
 	static public class SkinParameter extends AssetLoaderParameters<SpeziSkin> {
 		private float scaleFactor = 1.0f;
@@ -39,7 +39,7 @@ public class SpeziSkinLoader extends
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			FileHandle file, SkinParameter parameter) {
-		Array<AssetDescriptor> deps = new Array();
+		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
 		if (parameter == null) {
 			deps.add(new AssetDescriptor(resolve(fileName)
 					.pathWithoutExtension() + ".atlas", TextureAtlas.class));
