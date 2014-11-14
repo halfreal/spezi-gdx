@@ -10,14 +10,15 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import de.halfreal.spezi.gdx.system.Assets;
 import de.halfreal.spezi.mvc.AbstractController;
@@ -29,7 +30,7 @@ import de.halfreal.spezi.mvc.ListenerRegistry;
  * The base class for all game screens.
  */
 public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
-		implements ExtendedScreen {
+implements ExtendedScreen {
 
 	public static abstract class OnLoadedListener {
 		void onAssetsLoaded() {
@@ -87,8 +88,8 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	}
 
-	private static int blendDstFunc = GL11.GL_ONE_MINUS_SRC_ALPHA;
-	private static int blendSrcFunc = GL11.GL_SRC_ALPHA;
+	private static int blendDstFunc = GL20.GL_ONE_MINUS_SRC_ALPHA;
+	private static int blendSrcFunc = GL20.GL_SRC_ALPHA;
 	private static float DP_TRESHOLD;
 	private static String GFX_FOLDER;
 	public static int HEIGHT;
@@ -117,7 +118,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	/**
 	 * converts density independent pixels to on screen point/pixel dimensions
-	 * 
+	 *
 	 * @param dp
 	 * @return
 	 */
@@ -127,7 +128,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	/**
 	 * converts density independent pixels to on screen point/pixel dimensions
-	 * 
+	 *
 	 * @param dp
 	 * @return
 	 */
@@ -136,11 +137,11 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	}
 
 	public static void disableBlending() {
-		Gdx.gl.glDisable(GL10.GL_BLEND);
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	public static void enableBlending() {
-		Gdx.gl.glEnable(GL10.GL_BLEND);
+		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(blendSrcFunc, blendDstFunc);
 	}
 
@@ -159,13 +160,13 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	/**
 	 * LDPI ~ 120dpi - 0.75
-	 * 
+	 *
 	 * MDPI ~ 160dpi - 1.0
-	 * 
+	 *
 	 * HDPI ~ 240dpi - 1.5
-	 * 
+	 *
 	 * XHDPI ~320dpi - 2
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getGFXFolder() {
@@ -186,13 +187,13 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	/**
 	 * LDPI ~ 120dpi - 0.75
-	 * 
+	 *
 	 * MDPI ~ 160dpi - 1.0
-	 * 
+	 *
 	 * HDPI ~ 240dpi - 1.5
-	 * 
+	 *
 	 * XHDPI ~320dpi - 2
-	 * 
+	 *
 	 * @return
 	 */
 	public static float getRoundDensity() {
@@ -242,7 +243,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		this.controller = controller;
 		this.model = controller.getModel();
 		batch = new SpriteBatch();
-		stage = new Stage(WIDTH, HEIGHT, false) {
+		stage = new Stage(new StretchViewport(WIDTH, HEIGHT)) {
 
 			@Override
 			public void addActor(Actor actor) {
@@ -267,7 +268,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		listenerRegistry = new ListenerRegistry<MODEL>(model);
 		OrthographicCamera orthoCamara = new OrthographicCamera();
 		orthoCamara.setToOrtho(false, WIDTH, HEIGHT);
-		stage.setCamera(orthoCamara);
+		stage.getViewport().setCamera(orthoCamara);
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(false);
 		calculateDP();
@@ -295,7 +296,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 			background = new Image(style.background) {
 				@Override
-				public void draw(SpriteBatch batch, float parentAlpha) {
+				public void draw(Batch batch, float parentAlpha) {
 					super.draw(batch, parentAlpha);
 				};
 			};
@@ -472,7 +473,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 							.getController();
 					if (screenController instanceof ExtendedController) {
 						((ExtendedController<?>) screenController)
-								.performUpdate();
+						.performUpdate();
 					}
 
 				}
@@ -514,8 +515,8 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		stage.act(delta);
 
 		Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClear(GL10.GL_ALPHA_BITS);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_ALPHA_BITS);
 
 		if (!resumed || !Assets.isLoading()) {
 			resumed = false;
@@ -532,7 +533,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 		Gdx.app.log(getName(), "Resizing screen: " + getName() + " to: "
 				+ width + " x " + height);
 		// resize the stage
-		stage.setViewport(width, height, true);
+		// stage.setViewport(new ExtendViewport(width, height));
 		camara = new OrthographicCamera(WIDTH, HEIGHT);
 		calculateDP();
 		performShowComplete();
@@ -573,7 +574,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	/**
 	 * two actors on a screen concept, which is moving the old actor out to the
 	 * right and showing the new actor by moving it from left to right
-	 * 
+	 *
 	 * @param actor
 	 */
 	protected void showWidget(Actor actor) {
