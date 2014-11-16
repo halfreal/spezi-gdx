@@ -152,9 +152,9 @@ public class FontHelper {
 		parameter.size = size;
 		BitmapFont generateFont = generator.generateFont(parameter);
 
-		// TODO Store the Font in the temp folder for later reuse!
-		// use FontGenerator, to store the data, which is still unclear if we
-		// can use it on Android
+		// TODO Store the font in the temp folder for later reuse!
+		// Use FontGenerator to store the data, which is still unclear if we
+		// can use it on Android.
 		generateFont.getRegion().getTexture()
 				.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 

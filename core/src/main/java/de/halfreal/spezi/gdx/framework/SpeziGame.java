@@ -91,7 +91,7 @@ public abstract class SpeziGame extends Game {
 			oldScreen.onPauseScreen(new TransitionListener() {
 
 				@Override
-				public void complete() {
+				public void onTransitionComplete() {
 					setScreen(screen);
 				}
 

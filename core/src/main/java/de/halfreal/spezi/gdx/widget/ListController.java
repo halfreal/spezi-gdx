@@ -34,7 +34,7 @@ public class ListController<T> extends ExtendedController<ListModel<T>> {
 		super(model, framework);
 		this.defaultSortType = types[0];
 		for (String type : types) {
-			loadCompartors(clazz, type, factory);
+			loadComparators(clazz, type, factory);
 		}
 		loadCurrentSortType();
 		loadSortTypeStates();
@@ -54,7 +54,7 @@ public class ListController<T> extends ExtendedController<ListModel<T>> {
 		return defaultSortType;
 	}
 
-	public void loadCompartors(Class<T> clazz, String type,
+	public void loadComparators(Class<T> clazz, String type,
 			ComparatorFactory<T> factory) {
 		Comparator<T>[] comperators = factory.getComperator(type, clazz);
 		if (comperators != null) {

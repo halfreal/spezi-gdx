@@ -177,8 +177,8 @@ public class RelativeLayout {
 	}
 
 	public static <ASSIGNEE extends Actor> ASSIGNEE center(ASSIGNEE actor) {
-		actor.setPosition(AbstractScreen.WIDTH / 2f - actor.getWidth() / 2f,
-				AbstractScreen.HEIGHT / 2f - actor.getHeight() / 2f);
+		actor.setPosition(AbstractScreen.width / 2f - actor.getWidth() / 2f,
+				AbstractScreen.height / 2f - actor.getHeight() / 2f);
 
 		return actor;
 	}
@@ -186,7 +186,7 @@ public class RelativeLayout {
 	public static <ASSIGNEE extends Actor> ASSIGNEE centerHorizontal(
 			ASSIGNEE actor) {
 
-		actor.setX(AbstractScreen.WIDTH / 2f - actor.getWidth() / 2f);
+		actor.setX(AbstractScreen.width / 2f - actor.getWidth() / 2f);
 
 		return actor;
 	}
@@ -203,7 +203,7 @@ public class RelativeLayout {
 	public static <ASSIGNEE extends Actor> ASSIGNEE centerVertical(
 			ASSIGNEE actor) {
 
-		actor.setY(AbstractScreen.HEIGHT / 2f - actor.getHeight() / 2f);
+		actor.setY(AbstractScreen.height / 2f - actor.getHeight() / 2f);
 
 		return actor;
 	}
@@ -292,7 +292,7 @@ public class RelativeLayout {
 
 	public static <ASSIGNEE extends Actor> ASSIGNEE right(ASSIGNEE actor,
 			float rightMargin) {
-		actor.setX(AbstractScreen.WIDTH - actor.getWidth() - rightMargin);
+		actor.setX(AbstractScreen.width - actor.getWidth() - rightMargin);
 		return actor;
 
 	}
@@ -303,7 +303,7 @@ public class RelativeLayout {
 
 	public static <ASSIGNEE extends Actor> ASSIGNEE top(ASSIGNEE actor,
 			float topPadding) {
-		actor.setY(AbstractScreen.HEIGHT - actor.getHeight() - topPadding);
+		actor.setY(AbstractScreen.height - actor.getHeight() - topPadding);
 		return actor;
 	}
 

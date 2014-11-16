@@ -25,19 +25,19 @@ import de.halfreal.spezi.gdx.framework.AbstractScreen;
 public class Assets {
 
 	/**
-	 * All effects are ment to be shown on the left side, hence alignRigth
-	 * describes to show an Effect on the right side of the Object.
-	 * 
-	 * valid modifieres:
-	 * 
-	 * righ, left, top, bottom - align the animation on those sides
-	 * 
+	 * All effects are meant to be shown on the left side, hence alignRight
+	 * describes to show an effect on the right side of the object.
+	 *
+	 * Valid modifiers:
+	 *
+	 * right, left, top, bottom - align the animation on those sides
+	 *
 	 * x{pixel}, y{pixel} - an absolute offset
-	 * 
+	 *
 	 * s{factor} in percent - scale, no comma values
-	 * 
+	 *
 	 * @author Simon Joecks halfreal.de (c)
-	 * 
+	 *
 	 */
 	public static class ParticleModifier {
 		public static ParticleModifier createParticleModifier(String fileName) {
@@ -139,7 +139,7 @@ public class Assets {
 
 	/**
 	 * corrects the origin
-	 * 
+	 *
 	 * @param image
 	 */
 	public static <T extends Actor> T correctOrigin(T image) {
@@ -190,10 +190,10 @@ public class Assets {
 
 	public static String getPath(String name) {
 
-		String path = AbstractScreen.getGFXFolder() + name;
+		String path = AbstractScreen.getGfxFolder() + name;
 		if (!Gdx.files.internal(path).exists()) {
-			log.error("No fitting resulution for " + name
-					+ ", different resulution must be loaded!");
+			log.error("No fitting resolution for " + name
+					+ ", different resolution must be loaded!");
 			path = Assets.DRAWABLE_MDPI + name;
 			if (Gdx.files.internal(path).exists()) {
 				return path;
@@ -218,7 +218,7 @@ public class Assets {
 
 	public static float getRelativeScaleFactor(String name) {
 		float factor = AbstractScreen.getRoundDensity();
-		String path = AbstractScreen.getGFXFolder() + name;
+		String path = AbstractScreen.getGfxFolder() + name;
 		if (!Gdx.files.internal(path).exists()) {
 			path = Assets.DRAWABLE_MDPI + name;
 			if (Gdx.files.internal(path).exists()) {
