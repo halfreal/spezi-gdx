@@ -1,7 +1,7 @@
 package de.halfreal.spezi.gdx.system;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
@@ -16,7 +16,7 @@ public class LayeredNinePatchDrawable extends NinePatchDrawable {
 
 	/**
 	 * cornerId enumerates the ninepatch corners from bottom-left clock-wise
-	 * 
+	 *
 	 * @param ninepatch
 	 * @param corner
 	 * @param cornerId
@@ -40,8 +40,7 @@ public class LayeredNinePatchDrawable extends NinePatchDrawable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float x, float y, float width,
-			float height) {
+	public void draw(Batch batch, float x, float y, float width, float height) {
 		getPatch().draw(batch, x, y, width, height);
 
 		if (corner != null) {

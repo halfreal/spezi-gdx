@@ -106,11 +106,6 @@ public class GUIProfiler {
 		// TODO
 	}
 
-	private String decapitalize(String simpleName) {
-		return simpleName.substring(0, 1).toLowerCase()
-				+ simpleName.substring(1);
-	}
-
 	public Set<String> searchForRefs(String... refs) {
 		Set<String> realRefs = new HashSet<String>();
 

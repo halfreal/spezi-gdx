@@ -409,8 +409,4 @@ public class SpeziSkin extends Skin {
 				+ drawable.getClass());
 	}
 
-	private void scale(TextureRegion region) {
-		// TODO Auto-generated method stub
-
-	}
 }

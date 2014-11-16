@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 /**
  * Manages drag and drop operations through registered drag sources and drop
  * targets.
- * 
+ *
  * @author Nathan Sweet
  */
 public class DragAndDrop {
@@ -62,7 +62,7 @@ public class DragAndDrop {
 
 	/**
 	 * A target where a payload can be dragged from.
-	 * 
+	 *
 	 * @author Nathan Sweet
 	 */
 	static abstract public class Source {
@@ -94,7 +94,7 @@ public class DragAndDrop {
 
 	/**
 	 * A target where a payload can be dropped to.
-	 * 
+	 *
 	 * @author Nathan Sweet
 	 */
 	public static abstract class Target {
@@ -115,7 +115,7 @@ public class DragAndDrop {
 		/**
 		 * Called when the object is dragged over the target. The coordinates
 		 * are in the target's local coordinate system.
-		 * 
+		 *
 		 * @return true if this is a valid target for the object.
 		 */
 		abstract public boolean drag(Source source, Payload payload, float x,
@@ -147,12 +147,12 @@ public class DragAndDrop {
 	boolean isValidTarget;
 	Payload payload;
 	Source source;
-	ObjectMap<Source, DragListener> sourceListeners = new ObjectMap();
+	ObjectMap<Source, DragListener> sourceListeners = new ObjectMap<Source, DragListener>();
 	private float tapSquareSize = 8;
 
 	Target target;
 
-	Array<Target> targets = new Array();
+	Array<Target> targets = new Array<Target>();
 
 	public void addSource(final Source source) {
 		DragListener listener = new DragListener() {
@@ -306,7 +306,7 @@ public class DragAndDrop {
 
 	/**
 	 * drops an Actor automatically to any fitting target
-	 * 
+	 *
 	 * @param sourceActor
 	 * @param source
 	 */
@@ -321,7 +321,7 @@ public class DragAndDrop {
 
 	/**
 	 * drops a source to a specific target
-	 * 
+	 *
 	 * @param source
 	 * @param target
 	 */

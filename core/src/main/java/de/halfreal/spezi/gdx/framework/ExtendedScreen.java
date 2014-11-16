@@ -3,12 +3,12 @@ package de.halfreal.spezi.gdx.framework;
 import com.badlogic.gdx.Screen;
 
 /**
- * An interface to describe a more extened screen cycle, considering asset
- * loading and network dependence. Those methodes should be implemented rather
- * then the original Screen methods.
- * 
+ * An interface to describe a more extended screen cycle, considering asset
+ * loading and network dependency. Those methods should be implemented rather
+ * than the original Screen methods.
+ *
  * @author Simon Joecks halfreal.de (c)
- * 
+ *
  */
 public interface ExtendedScreen extends Screen {
 
@@ -30,17 +30,18 @@ public interface ExtendedScreen extends Screen {
 	 * The screen is created but not shown, this method is always called before
 	 * the screen is attached to the GUI Thread, and also before collecting any
 	 * assets or network requests.
-	 * 
+	 *
 	 * Here you can initialize Objects needed for the collection phases, and
 	 * also register needed Widget
 	 */
 	void onCreate();
 
 	/**
-	 * When the Screen should be detached, {@link TransitionListener#complete()}
-	 * should be called in order to trigger a screen change. An out going
-	 * Animation can be realized here
-	 * 
+	 * When the Screen should be detached,
+	 * {@link TransitionListener#onTransitionComplete()} should be called in
+	 * order to trigger a screen change. An out going Animation can be realized
+	 * here
+	 *
 	 * @param listener
 	 */
 	void onPauseScreen(TransitionListener listener);

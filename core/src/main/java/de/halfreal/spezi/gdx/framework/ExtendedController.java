@@ -23,11 +23,8 @@ import com.badlogic.gdx.Preferences;
 import de.halfreal.spezi.mvc.AbstractController;
 import de.halfreal.spezi.mvc.AbstractModel;
 
-/**
- * FIXME extract Prefernc managment to PrefernceKeys and a generic way to
- * approach prefrence storing in the spezi-mvc framework
- * 
- */
+// TODO Extract preference management to PreferenceKeys and a generic way to
+// approach preference storing in the spezi-mvc framework.
 public class ExtendedController<M extends AbstractModel> extends
 		AbstractController<M> {
 
@@ -37,7 +34,7 @@ public class ExtendedController<M extends AbstractModel> extends
 	private Preferences defaultPreferences;
 	protected SpeziGame framework;
 	protected M model;
-	private ObjectMapper objectMappper;
+	private ObjectMapper objectMapper;
 	protected AbstractModel screenModel;
 	private Boolean updated = false;
 
@@ -45,7 +42,7 @@ public class ExtendedController<M extends AbstractModel> extends
 		super(model);
 		this.model = model;
 		this.framework = framework;
-		objectMappper = ObjectMapperFactory.create();
+		objectMapper = ObjectMapperFactory.create();
 	}
 
 	public Preferences defaultPreferences() {
@@ -135,9 +132,9 @@ public class ExtendedController<M extends AbstractModel> extends
 
 		if (object instanceof String) {
 
-			JavaType constructType = objectMappper.constructType(type);
+			JavaType constructType = objectMapper.constructType(type);
 			try {
-				return objectMappper.readValue((String) object, constructType);
+				return objectMapper.readValue((String) object, constructType);
 			} catch (JsonParseException e) {
 				e.printStackTrace();
 			} catch (JsonMappingException e) {
@@ -176,8 +173,8 @@ public class ExtendedController<M extends AbstractModel> extends
 	}
 
 	/**
-	 * just works for same KEY <-> property name bindings
-	 * 
+	 * Only works for same KEY <-> property name bindings.
+	 *
 	 * @param key
 	 */
 	public boolean restore(String key) {
@@ -200,9 +197,8 @@ public class ExtendedController<M extends AbstractModel> extends
 		}
 
 		if (setterMethod == null) {
-			log.warn("No setter method  found for key "
-					+ key
-					+ " , did you refactored the propertyName but not the KEY_ ?");
+			log.warn("No setter method  found for key " + key
+					+ " , did you refactor the propertyName but not the KEY_ ?");
 			return false;
 		}
 
@@ -210,7 +206,7 @@ public class ExtendedController<M extends AbstractModel> extends
 				|| setterMethod.getParameterTypes().length != 1) {
 			log.warn("Setter method "
 					+ setterName
-					+ " has a not valid amount of paameters, by convention setters have a single paramter");
+					+ " has a not valid amount of parameters, by convention setters have a single paramter.");
 			return false;
 		}
 
@@ -247,15 +243,14 @@ public class ExtendedController<M extends AbstractModel> extends
 			setterMethod.invoke(getModel(), value);
 			return true;
 		} catch (IllegalArgumentException e) {
-			log.error("Provided a bad argument" + setterName, e);
+			log.error("Provided a bad argument '" + setterName + "'", e);
 		} catch (IllegalAccessException e) {
-			log.error("Can not access: " + setterName, e);
+			log.error("Can not access '" + setterName + "'", e);
 		} catch (InvocationTargetException e) {
-			log.error("can not invocate the method " + setterName, e);
+			log.error("Can not invocate the method '" + setterName + "'", e);
 		}
 
 		return false;
-
 	}
 
 	public void setScreenModel(AbstractModel screenModel) {
@@ -264,7 +259,6 @@ public class ExtendedController<M extends AbstractModel> extends
 
 	// TODO move to SpeziScreen
 	protected void storeOnChange(final String key) {
-
 		// listen(key, new GdxPropertyChangeListener() {
 		//
 		// @Override
@@ -276,11 +270,9 @@ public class ExtendedController<M extends AbstractModel> extends
 	}
 
 	protected void storeProperty(String key, Collection<?> list) {
-
 		Preferences preferences = getPreferences();
 		preferences.putString(key, toString(list));
 		preferences.flush();
-
 	}
 
 	public void storeProperty(String key, Object newValue) {
@@ -306,7 +298,7 @@ public class ExtendedController<M extends AbstractModel> extends
 		} else {
 			String outJson;
 			try {
-				outJson = objectMappper.writeValueAsString(newValue);
+				outJson = objectMapper.writeValueAsString(newValue);
 				storeProperty(key, outJson);
 			} catch (JsonGenerationException e) {
 				e.printStackTrace();

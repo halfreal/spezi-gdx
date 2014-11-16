@@ -19,10 +19,10 @@ public abstract class ListWidget<T> extends
 	}
 
 	/**
-	 * creates a new item to display, this view needs to have set bounds after
+	 * Creates a new item to display, this view needs to have set bounds after
 	 * creation, otherwise it is not possible to position it correctly in the
-	 * list creation
-	 * 
+	 * list creation.
+	 *
 	 * @param data
 	 * @param skin
 	 * @return
@@ -65,7 +65,7 @@ public abstract class ListWidget<T> extends
 	}
 
 	/**
-	 * rebuilds the list
+	 * Rebuilds the list.
 	 */
 	protected abstract void refresh();
 

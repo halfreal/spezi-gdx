@@ -15,10 +15,10 @@ public class CacheHelper {
 	private static String desktopTempPath = "/tmp/eafos/";
 
 	/**
-	 * DO NOT USE A SEPERATOR WHICH MUST BE ESCAPED IN JAVA OR CHANGE THE
+	 * DO NOT USE A SEPARATOR WHICH MUST BE ESCAPED IN JAVA OR CHANGE THE
 	 * String.split METHOD
 	 */
-	private static final String SEPERATOR = "_";
+	private static final String SEPARATOR = "_";
 
 	static {
 		// 20MB
@@ -27,10 +27,10 @@ public class CacheHelper {
 	}
 
 	/**
-	 * renames existing files to fit the time-name pattern in order to determine
+	 * Renames existing files to fit the time-name pattern in order to determine
 	 * last access on a file. If no file exists only absolute FilePath is
 	 * returned.
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -97,9 +97,9 @@ public class CacheHelper {
 	}
 
 	/**
-	 * checks if a file exists in the cache directory independant of its time
-	 * version
-	 * 
+	 * Checks if a file exists in the cache directory independent of its time
+	 * version.
+	 *
 	 * @param fileName
 	 * @return
 	 */
@@ -112,8 +112,8 @@ public class CacheHelper {
 	}
 
 	/**
-	 * not renaming the file, but just returning an existing FilePath
-	 * 
+	 * Not renaming the file, but just returning an existing FilePath.
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -142,8 +142,8 @@ public class CacheHelper {
 	}
 
 	/**
-	 * used only with found paths by {@link CacheHelper.findFile}
-	 * 
+	 * Used only with found paths by {@link CacheHelper.findFile}.
+	 *
 	 * @param file
 	 * @return
 	 */
@@ -154,7 +154,7 @@ public class CacheHelper {
 		String name = file.name();
 		long lastUsed;
 		try {
-			lastUsed = Long.parseLong(name.split(SEPERATOR)[0]);
+			lastUsed = Long.parseLong(name.split(SEPARATOR)[0]);
 		} catch (Exception e) {
 			lastUsed = 0;
 		}
@@ -162,8 +162,8 @@ public class CacheHelper {
 	}
 
 	/**
-	 * used only with found paths by {@link CacheHelper.findFile}
-	 * 
+	 * Used only with found paths by {@link CacheHelper.findFile}.
+	 *
 	 * @param file
 	 * @return
 	 */

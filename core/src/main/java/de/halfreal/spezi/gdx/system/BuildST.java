@@ -91,7 +91,7 @@ public class BuildST {
 					"-", "_");
 			String[] refs = pair.refs != null ? pair.refs
 					.toArray(new String[pair.refs.size()]) : null;
-			createConstant(pair.styleName, field, sb, refs, i < 1);
+					createConstant(pair.styleName, field, sb, refs, i < 1);
 		}
 		createEnd(sb, className);
 		save(sb, className);
@@ -103,7 +103,7 @@ public class BuildST {
 			sb.append(name).append("(\"").append(key).append("\", null)");
 		} else {
 			sb.append(name).append("(\"").append(key)
-					.append("\", new String[]{");
+			.append("\", new String[]{");
 			for (int i = 0; i < refs.length; i++) {
 				sb.append('"');
 				sb.append(refs[i]);
@@ -252,7 +252,7 @@ public class BuildST {
 				+ "../eafos-client-android/assets/skins/defaultSkin.json");
 		FileInputStream packFile = new FileInputStream(
 				basedir
-						+ "../eafos-client-android/assets/drawable-ldpi/defaultSkin.atlas");
+				+ "../eafos-client-android/assets/drawable-ldpi/defaultSkin.atlas");
 
 		build(handle, packFile, "ST");
 
@@ -260,7 +260,7 @@ public class BuildST {
 				+ "../eafos-client-android/assets/skins/splashSkin.json");
 		packFile = new FileInputStream(
 				basedir
-						+ "../eafos-client-android/assets/drawable-ldpi/splashSkin.atlas");
+				+ "../eafos-client-android/assets/drawable-ldpi/splashSkin.atlas");
 
 		build(handle, packFile, "ST_SPLASH");
 
@@ -273,8 +273,8 @@ public class BuildST {
 		try {
 			writer = new FileWriter(
 					basedir
-							+ "../eafos-client3/src/main/gen/de/halfreal/eafos/client/gen/"
-							+ fileName + ".java", false);
+					+ "../eafos-client3/src/main/gen/de/halfreal/eafos/client/gen/"
+					+ fileName + ".java", false);
 			writer.write(sb.toString());
 		} catch (IOException e) {
 			throw e;

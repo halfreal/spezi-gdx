@@ -25,13 +25,13 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 	private Skin skin;
 
 	/**
-	 * a vertical Scroll list, using a default scrollPane style. It is
+	 * A vertical scroll list, using a default scrollPane style. It is
 	 * inefficient in the sense that it can not display many items and being
 	 * still responsive.
-	 * 
+	 *
 	 * TODO LazyList should cache views and reuse them while scrolling down
-	 * 
-	 * 
+	 *
+	 *
 	 * @param controller
 	 * @param screen
 	 */
@@ -58,6 +58,7 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
 		return bottomOffset;
 	}
 
+	@Override
 	public int getColumns() {
 		return columns;
 	}
