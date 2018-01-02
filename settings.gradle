@@ -3,5 +3,4 @@ rootProject.name = 'spezi-gdx-parent'
 include ':spezi-gdx'
 include ':spezi-gdx-map'
 
-project(':spezi-gdx').projectDir = "$rootDir/core" as File
 project(':spezi-gdx-map').projectDir = "$rootDir/map" as File
