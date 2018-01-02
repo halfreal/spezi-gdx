@@ -1,7 +1,7 @@
 description = 'Spezi GDX :: Core'
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:slf4j-api:1.7.25'
 
     compile "com.badlogicgames.gdx:gdx:$libgdxVersion"
     compile "com.badlogicgames.gdx:gdx-freetype:$libgdxVersion"
