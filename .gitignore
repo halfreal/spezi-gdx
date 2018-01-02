@@ -1,14 +1,5 @@
-.settings
-.project
-.classpath
-bin
-target
-gen
+/.gradle
+/.idea
+/local.properties
 
-*.class
-
-
-# Package Files #
-*.jar
-*.war
-*.ear
+build
