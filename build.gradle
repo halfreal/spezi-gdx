@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
 
     group = 'de.halfreal'
     version = '1.1.0-SNAPSHOT'
@@ -19,18 +19,32 @@ subprojects {
         options.encoding = 'UTF-8'
     }
 
-    task packageSources(type: Jar) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    artifacts.archives packageSources
-
     repositories {
         jcenter()
 
         // Until spezi-mvc is relased in a public repository is needs to be installed in the local
         // maven repository manually.
         mavenLocal()
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allJava
+    }
+
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
     }
 }
