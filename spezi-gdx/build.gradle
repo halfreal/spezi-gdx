@@ -13,5 +13,5 @@ dependencies {
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
 
-    compile 'de.halfreal:spezi-mvc:1.0.0-SNAPSHOT'
+    compile 'de.halfreal:spezi-mvc:1.1.0-SNAPSHOT'
 }
