@@ -1,6 +1,7 @@
 package de.halfreal.spezi.gdx.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -38,7 +39,7 @@ public class VerticalProgressBar extends ProgressBar {
 			private int lastAmount;
 
 			@Override
-			public void draw(SpriteBatch batch, float parentAlpha) {
+			public void draw(Batch batch, float parentAlpha) {
 				batch.flush();
 				if (isAnimationRunning()) {
 					setElapsedTime(getElapsedTime()
