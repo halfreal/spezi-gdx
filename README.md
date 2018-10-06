@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/halfreal/spezi-gdx.svg?branch=master)](https://travis-ci.org/halfreal/spezi-gdx)
+
 spezi-gdx
 =========
 
