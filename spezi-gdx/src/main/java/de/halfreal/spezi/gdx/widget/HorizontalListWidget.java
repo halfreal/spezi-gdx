@@ -160,8 +160,9 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 		if (currentSelectedItem != null) {
 			Actor actor = cacheMap.get(currentSelectedItem);
 			if (actor != null) {
-				scrollPane.scrollToCenter(actor.getX(), actor.getY(),
-						actor.getWidth(), actor.getHeight());
+//				scrollPane.scrollToCenter(actor.getX(), actor.getY(),
+//						actor.getWidth(), actor.getHeight());
+				scrollPane.scrollTo(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), false, true);
 			}
 		}
 	}

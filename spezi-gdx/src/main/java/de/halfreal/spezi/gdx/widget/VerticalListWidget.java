@@ -17,155 +17,153 @@ import de.halfreal.spezi.gdx.view.VerticalWidgetGroup;
 
 public abstract class VerticalListWidget<T> extends ListWidget<T> {
 
-	private float bottomOffset;
-	private Map<T, Actor> cacheMap;
-	private int columns;
-	private boolean firstTime;
-	private ScrollPane scrollPane;
-	private Skin skin;
+    private float bottomOffset;
+    private Map<T, Actor> cacheMap;
+    private int columns;
+    private boolean firstTime;
+    private ScrollPane scrollPane;
+    private Skin skin;
 
-	/**
-	 * a vertical Scroll list, using a default scrollPane style. It is
-	 * inefficient in the sense that it can not display many items and being
-	 * still responsive.
-	 * 
-	 * TODO LazyList should cache views and reuse them while scrolling down
-	 * 
-	 * 
-	 * @param controller
-	 * @param screen
-	 */
-	public VerticalListWidget(ListController<T> controller,
-			AbstractScreen<?, ?> screen) {
-		this(controller, screen, 1);
-	}
+    /**
+     * a vertical Scroll list, using a default scrollPane style. It is
+     * inefficient in the sense that it can not display many items and being
+     * still responsive.
+     * <p>
+     * TODO LazyList should cache views and reuse them while scrolling down
+     *
+     * @param controller
+     * @param screen
+     */
+    public VerticalListWidget(ListController<T> controller,
+                              AbstractScreen<?, ?> screen) {
+        this(controller, screen, 1);
+    }
 
-	public VerticalListWidget(ListController<T> controller,
-			AbstractScreen<?, ?> screen, int columns) {
-		super(controller, screen);
-		this.columns = columns;
-		cacheMap = new HashMap<T, Actor>();
-		firstTime = true;
-	}
+    public VerticalListWidget(ListController<T> controller,
+                              AbstractScreen<?, ?> screen, int columns) {
+        super(controller, screen);
+        this.columns = columns;
+        cacheMap = new HashMap<T, Actor>();
+        firstTime = true;
+    }
 
-	@Override
-	public void dispose() {
-		cacheMap.clear();
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        cacheMap.clear();
+        super.dispose();
+    }
 
-	public float getBottomOffset() {
-		return bottomOffset;
-	}
+    public float getBottomOffset() {
+        return bottomOffset;
+    }
 
-	public int getColumns() {
-		return columns;
-	}
+    public int getColumns() {
+        return columns;
+    }
 
-	@Override
-	public Actor getItem(T data) {
-		return cacheMap.get(data);
-	}
+    @Override
+    public Actor getItem(T data) {
+        return cacheMap.get(data);
+    }
 
-	protected WidgetGroup getLayoutActor() {
-		VerticalWidgetGroup verticalWidgetGroup = new VerticalWidgetGroup(
-				columns);
-		verticalWidgetGroup.setBottomOffset(bottomOffset);
-		verticalWidgetGroup.setPadding(getItemPadding());
-		return verticalWidgetGroup;
-	}
+    protected WidgetGroup getLayoutActor() {
+        VerticalWidgetGroup verticalWidgetGroup = new VerticalWidgetGroup(
+                columns);
+        verticalWidgetGroup.setBottomOffset(bottomOffset);
+        verticalWidgetGroup.setPadding(getItemPadding());
+        return verticalWidgetGroup;
+    }
 
-	@Override
-	public float getPrefWidth() {
-		return getWidth();
-	}
+    @Override
+    public float getPrefWidth() {
+        return getWidth();
+    }
 
-	public ScrollPane getScrollPane() {
-		return scrollPane;
-	}
+    public ScrollPane getScrollPane() {
+        return scrollPane;
+    }
 
-	public Action inAnimation() {
-		return null;
-	}
+    public Action inAnimation() {
+        return null;
+    }
 
-	public boolean isFirstTime() {
-		return firstTime;
-	}
+    public boolean isFirstTime() {
+        return firstTime;
+    }
 
-	@Override
-	protected void onCreateView(Skin skin) {
-		this.skin = skin;
-		scrollPane = new ScrollPane(null, skin) {
+    @Override
+    protected void onCreateView(Skin skin) {
+        this.skin = skin;
+        scrollPane = new ScrollPane(null, skin) {
 
-			@Override
-			public void scrollY(float pixels) {
-				super.scrollY(pixels);
-				model.setRelativePosition(scrollPane.getScrollPercentY());
-			}
+            @Override
+            public void scrollY(float pixels) {
+                super.scrollY(pixels);
+                model.setRelativePosition(scrollPane.getScrollPercentY());
+            }
 
-		};
+        };
 
-		refresh();
-		scrollPane.setWidth(getWidth() - getPadLeft() - getPadRight());
-		scrollPane.setHeight(getHeight() - getPadTop() - getPadBottom());
-		RelativeLayout.marginLeft(
-				RelativeLayout.marginBottom(scrollPane, getPadBottom()),
-				getPadLeft());
-		scrollPane.setScrollingDisabled(true, false);
-		addActor(scrollPane);
-	}
+        refresh();
+        scrollPane.setWidth(getWidth() - getPadLeft() - getPadRight());
+        scrollPane.setHeight(getHeight() - getPadTop() - getPadBottom());
+        RelativeLayout.marginLeft(
+                RelativeLayout.marginBottom(scrollPane, getPadBottom()),
+                getPadLeft());
+        scrollPane.setScrollingDisabled(true, false);
+        addActor(scrollPane);
+    }
 
-	@Override
-	protected void refresh() {
-		// TODO just generate new item, all others must be reused
-		WidgetGroup scrollActor = getLayoutActor();
+    @Override
+    protected void refresh() {
+        // TODO just generate new item, all others must be reused
+        WidgetGroup scrollActor = getLayoutActor();
 
-		Set<T> removeSet = new HashSet<T>();
-		removeSet.addAll(cacheMap.keySet());
+        Set<T> removeSet = new HashSet<T>();
+        removeSet.addAll(cacheMap.keySet());
 
-		T currentSelectedItem = model.getCurrentSelectedItem();
+        T currentSelectedItem = model.getCurrentSelectedItem();
 
-		for (int i = model.getCount() - 1; i >= 0; i--) {
-			T item = model.getItem(i);
-			boolean selected = currentSelectedItem == item;
-			Actor actor = createItem(item, skin, cacheMap.get(item), selected);
-			if (actor != null) {
-				Action inAnimation = inAnimation();
-				if (inAnimation != null && firstTime) {
-					actor.addAction(inAnimation);
-				}
-				cacheMap.put(item, actor);
-				removeSet.remove(item);
-				scrollActor.addActor(actor);
-			}
-		}
-		for (T removeKey : removeSet) {
-			cacheMap.remove(removeKey);
-		}
+        for (int i = model.getCount() - 1; i >= 0; i--) {
+            T item = model.getItem(i);
+            boolean selected = currentSelectedItem == item;
+            Actor actor = createItem(item, skin, cacheMap.get(item), selected);
+            if (actor != null) {
+                Action inAnimation = inAnimation();
+                if (inAnimation != null && firstTime) {
+                    actor.addAction(inAnimation);
+                }
+                cacheMap.put(item, actor);
+                removeSet.remove(item);
+                scrollActor.addActor(actor);
+            }
+        }
+        for (T removeKey : removeSet) {
+            cacheMap.remove(removeKey);
+        }
 
-		scrollActor.pack();
-		scrollPane.setWidget(scrollActor);
-		firstTime = false;
-	}
+        scrollActor.pack();
+        scrollPane.setWidget(scrollActor);
+        firstTime = false;
+    }
 
-	@Override
-	public void scrollToSelectedElement() {
-		T currentSelectedItem = model.getCurrentSelectedItem();
-		if (currentSelectedItem != null) {
-			Actor actor = cacheMap.get(currentSelectedItem);
-			if (actor != null) {
-				scrollPane.scrollToCenter(actor.getX(), actor.getY(),
-						actor.getWidth(), actor.getHeight());
-			}
-		}
-	}
+    @Override
+    public void scrollToSelectedElement() {
+        T currentSelectedItem = model.getCurrentSelectedItem();
+        if (currentSelectedItem != null) {
+            Actor actor = cacheMap.get(currentSelectedItem);
+            if (actor != null) {
+                scrollPane.scrollTo(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight(), false, true);
+            }
+        }
+    }
 
-	public void setBottomOffset(float bottomOffset) {
-		this.bottomOffset = bottomOffset;
-	}
+    public void setBottomOffset(float bottomOffset) {
+        this.bottomOffset = bottomOffset;
+    }
 
-	public void setFirstTime(boolean firstTime) {
-		this.firstTime = firstTime;
-	}
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
+    }
 
 }
