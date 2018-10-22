@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 
-import de.halfreal.spezi.gdx.framework.AbstractScreen;
 import de.halfreal.spezi.gdx.framework.RelativeLayout;
+import de.halfreal.spezi.gdx.framework.SpeziScreen;
 import de.halfreal.spezi.gdx.view.VerticalWidgetGroup;
 
 public abstract class VerticalListWidget<T> extends ListWidget<T> {
@@ -35,12 +35,12 @@ public abstract class VerticalListWidget<T> extends ListWidget<T> {
      * @param screen
      */
     public VerticalListWidget(ListController<T> controller,
-                              AbstractScreen<?, ?> screen) {
+                              SpeziScreen screen) {
         this(controller, screen, 1);
     }
 
     public VerticalListWidget(ListController<T> controller,
-                              AbstractScreen<?, ?> screen, int columns) {
+                              SpeziScreen screen, int columns) {
         super(controller, screen);
         this.columns = columns;
         cacheMap = new HashMap<T, Actor>();

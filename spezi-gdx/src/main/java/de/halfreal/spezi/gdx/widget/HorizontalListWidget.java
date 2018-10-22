@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Array;
 
-import de.halfreal.spezi.gdx.framework.AbstractScreen;
 import de.halfreal.spezi.gdx.framework.RelativeLayout;
+import de.halfreal.spezi.gdx.framework.SpeziScreen;
 import de.halfreal.spezi.gdx.view.HorizontalWidgetGroup;
 
 public abstract class HorizontalListWidget<T> extends ListWidget<T> {
@@ -27,18 +27,18 @@ public abstract class HorizontalListWidget<T> extends ListWidget<T> {
 	private float sideOffset;
 	private Skin skin;
 
-	public HorizontalListWidget(AbstractScreen<?, ?> screen) {
-		this(new ListController<T>(new ListModel<T>(), screen.getFramework()),
+	public HorizontalListWidget(SpeziScreen screen) {
+		this(new ListController<T>(new ListModel<T>(), screen.getGame()),
 				screen, 1);
 	}
 
 	public HorizontalListWidget(ListController<T> controller,
-			AbstractScreen<?, ?> screen) {
+			SpeziScreen screen) {
 		this(controller, screen, 1);
 	}
 
 	public HorizontalListWidget(ListController<T> controller,
-			AbstractScreen<?, ?> screen, int rows) {
+			SpeziScreen screen, int rows) {
 		super(controller, screen);
 		this.rows = rows;
 		cacheMap = new HashMap<T, Actor>();
