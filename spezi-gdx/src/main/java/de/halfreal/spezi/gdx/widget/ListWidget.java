@@ -5,8 +5,8 @@ import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import de.halfreal.spezi.gdx.framework.AbstractScreen;
 import de.halfreal.spezi.gdx.framework.ScreenWidget;
+import de.halfreal.spezi.gdx.framework.SpeziScreen;
 import de.halfreal.spezi.mvc.UpdateListener;
 
 public abstract class ListWidget<T> extends
@@ -14,7 +14,7 @@ public abstract class ListWidget<T> extends
 
 	private float itemPadding;
 
-	public ListWidget(ListController<T> controller, AbstractScreen<?, ?> screen) {
+	public ListWidget(ListController<T> controller, SpeziScreen screen) {
 		super(controller, screen);
 	}
 

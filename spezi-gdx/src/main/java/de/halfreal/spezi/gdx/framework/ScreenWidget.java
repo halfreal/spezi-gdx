@@ -31,10 +31,10 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 	protected MODEL model;
 	private float prefHeight;
 	private float prefWidth;
-	protected AbstractScreen<?, ?> screen;
+	protected SpeziScreen screen;
 	private Skin skin;
 
-	public ScreenWidget(C controller, AbstractScreen<?, ?> screen) {
+	public ScreenWidget(C controller, SpeziScreen screen) {
 		if (controller != null) {
 			this.model = controller.getModel();
 		}
@@ -58,7 +58,7 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 	}
 
 	public SpeziGame getFramework() {
-		return screen.getFramework();
+		return screen.getGame();
 	}
 
 	public MODEL getModel() {
@@ -75,7 +75,7 @@ public class ScreenWidget<C extends AbstractController<MODEL>, MODEL extends Abs
 		return prefWidth;
 	}
 
-	public AbstractScreen<?, ?> getScreen() {
+	public SpeziScreen getScreen() {
 		return screen;
 	}
 

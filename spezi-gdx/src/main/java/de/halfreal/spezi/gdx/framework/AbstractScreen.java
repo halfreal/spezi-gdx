@@ -31,7 +31,7 @@ import de.halfreal.spezi.mvc.ListenerRegistry;
  * The base class for all game screens.
  */
 public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends AbstractModel>
-		implements ExtendedScreen {
+		extends SpeziScreen {
 
 	public static abstract class OnLoadedListener {
 		void onAssetsLoaded() {
@@ -228,7 +228,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	protected final SpriteBatch batch;
 	protected OrthographicCamera camara;
 	protected C controller;
-	protected final SpeziGame framework;
 	private boolean initModelListeners;
 	private ListenerRegistry<MODEL> listenerRegistry;
 	private MODEL model;
@@ -240,7 +239,7 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 	private ScreenStyle style;
 
 	public AbstractScreen(SpeziGame framework, C controller) {
-		this.framework = framework;
+		super(framework);
 		this.controller = controller;
 		this.model = controller.getModel();
 		batch = new SpriteBatch();
@@ -340,10 +339,6 @@ public class AbstractScreen<C extends AbstractController<MODEL>, MODEL extends A
 
 	public C getController() {
 		return controller;
-	}
-
-	public SpeziGame getFramework() {
-		return framework;
 	}
 
 	public MODEL getModel() {
