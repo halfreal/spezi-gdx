@@ -18,7 +18,8 @@ public class AutoScalingLabel extends Label {
     @Override
     public void setText(CharSequence newText) {
         super.setText(newText);
-        float oldFontScale = getFontScaleX();
+        float oldFontScaleX = getFontScaleX() != 1 ? getFontScaleX() : getStyle().font.getScaleX();
+        float oldFontScaleY = getFontScaleY() != 1 ? getFontScaleY() :getStyle().font.getScaleY();
         float scaleFactorX = 1f;
         float scaleFactorY = 1f;
 
@@ -33,6 +34,6 @@ public class AutoScalingLabel extends Label {
         }
 
         float scaleFactor = Math.min(scaleFactorX, scaleFactorY);
-        setFontScale(oldFontScale * scaleFactor);
+        setFontScale(oldFontScaleX * scaleFactor, oldFontScaleY * scaleFactor);
     }
 }

@@ -233,6 +233,10 @@ public class SpeziSkin extends Skin {
 						// DP Value of the font
 						Float size = data.getFloat("size",
 								FontHelper.STANDART_SIZE);
+						Float scaleX = data.getFloat("scaleX",
+								1f);
+						Float scaleY = data.getFloat("scaleY",
+								1f);
 						FileHandle fontFile = skinFile.parent().child(path);
 
 						if (!fontFile.exists()) {
@@ -266,10 +270,10 @@ public class SpeziSkin extends Skin {
 									FileHandle imageFile = fontFile.parent()
 											.child(regionName + ".png");
 									if (imageFile.exists()) {
-										return new BitmapFont(fontFile,
-												imageFile, false);
+										return scale(new BitmapFont(fontFile,
+												imageFile, false), scaleX, scaleY);
 									} else {
-										return new BitmapFont(fontFile, false);
+										return scale(new BitmapFont(fontFile, false), scaleX, scaleY);
 									}
 								}
 							} catch (RuntimeException ex) {
@@ -279,9 +283,14 @@ public class SpeziSkin extends Skin {
 							}
 						} else {
 							// return FontHelper.getFont(path, fontSize(size));
-							return FontHelper.generateFont(path + ".ttf",
-									fontSize(size), null);
+							return scale(FontHelper.generateFont(path + ".ttf",
+									fontSize(size), null), scaleX, scaleY);
 						}
+					}
+
+					private BitmapFont scale(BitmapFont bitmapFont, Float scaleX, Float scaleY) {
+						bitmapFont.getData().setScale(scaleX, scaleY);
+						return bitmapFont;
 					}
 				});
 
