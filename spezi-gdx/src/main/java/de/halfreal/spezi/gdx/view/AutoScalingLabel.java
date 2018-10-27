@@ -5,32 +5,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AutoScalingLabel extends Label {
 
-	public AutoScalingLabel(CharSequence text, LabelStyle style) {
-		super(text, style);
-		setText(text);
-	}
+    public AutoScalingLabel(CharSequence text, LabelStyle style) {
+        super(text, style);
+        setText(text);
+    }
 
-	public AutoScalingLabel(CharSequence text, Skin skin, String styleName) {
-		super(text, skin, styleName);
-		setText(text);
-	}
+    public AutoScalingLabel(CharSequence text, Skin skin, String styleName) {
+        super(text, skin, styleName);
+        setText(text);
+    }
 
-	@Override
-	public void setText(CharSequence newText) {
-		super.setText(newText);
-		float oldFontScale = getStyle().font.getScaleX();
-		float width = getPrefWidth();
-		if (width > getWidth()) {
-			float scaleFactor = getWidth() / width;
-			setFontScale(scaleFactor * oldFontScale);
-		}
+    @Override
+    public void setText(CharSequence newText) {
+        super.setText(newText);
+        float oldFontScale = getFontScaleX();
+        float scaleFactorX = 1f;
+        float scaleFactorY = 1f;
 
-		oldFontScale = getStyle().font.getScaleY();
-		float height = getPrefHeight();
-		if (height > getHeight()) {
-			float scaleFactor = getHeight() / height;
-			setFontScale(scaleFactor * oldFontScale);
-		}
-	}
+        float width = getPrefWidth();
+        if (width > getWidth()) {
+            scaleFactorX = getWidth() / width;
+        }
 
+        float height = getPrefHeight();
+        if (height > getHeight()) {
+            scaleFactorY = getHeight() / height;
+        }
+
+        float scaleFactor = Math.min(scaleFactorX, scaleFactorY);
+        setFontScale(oldFontScale * scaleFactor);
+    }
 }
