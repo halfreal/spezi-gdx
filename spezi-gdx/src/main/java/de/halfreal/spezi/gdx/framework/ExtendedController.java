@@ -1,5 +1,17 @@
 package de.halfreal.spezi.gdx.framework;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.halfreal.spezi.mvc.AbstractController;
+import de.halfreal.spezi.mvc.AbstractModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,24 +21,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
-
-import de.halfreal.spezi.mvc.AbstractController;
-import de.halfreal.spezi.mvc.AbstractModel;
-
 /**
  * FIXME extract Prefernc managment to PrefernceKeys and a generic way to
  * approach prefrence storing in the spezi-mvc framework
- * 
+ *
  */
 public class ExtendedController<M extends AbstractModel> extends
 		AbstractController<M> {
@@ -177,7 +175,7 @@ public class ExtendedController<M extends AbstractModel> extends
 
 	/**
 	 * just works for same KEY <-> property name bindings
-	 * 
+	 *
 	 * @param key
 	 */
 	public boolean restore(String key) {
