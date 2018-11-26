@@ -33,6 +33,8 @@ public class SpeziSkin extends Skin {
 	private static Logger log = LoggerFactory.getLogger(SpeziSkin.class);
 	private float scaleFactor = 1.0f;
 
+	public static float ninePatchScale = 1.0f;
+
 	public SpeziSkin(FileHandle resolve, TextureAtlas atlas, float scaleFactor) {
 		super(resolve, atlas);
 		this.scaleFactor = scaleFactor;
@@ -319,8 +321,27 @@ public class SpeziSkin extends Skin {
 	@Override
 	public NinePatch getPatch(String name) {
 		GUIProfiler.instance().assetAccess(name, NinePatch.class);
-		NinePatch patch = super.getPatch(name);
-		return patch;
+
+		NinePatch patch = optional(name, NinePatch.class);
+		if (patch != null) return patch;
+
+		try {
+			TextureRegion region = getRegion(name);
+			if (region instanceof AtlasRegion) {
+				int[] splits = ((AtlasRegion)region).splits;
+				if (splits != null) {
+					patch = new NinePatch(region, splits[0], splits[1], splits[2], splits[3]);
+					int[] pads = ((AtlasRegion)region).pads;
+					if (pads != null) patch.setPadding(pads[0], pads[1], pads[2], pads[3]);
+				}
+			}
+			if (patch == null) patch = new NinePatch(region);
+			patch.scale(ninePatchScale, ninePatchScale);
+			add(name, patch, NinePatch.class);
+			return patch;
+		} catch (GdxRuntimeException ex) {
+			throw new GdxRuntimeException("No NinePatch, TextureRegion, or Texture registered with name: " + name);
+		}
 	}
 
 	@Override
